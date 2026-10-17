@@ -91,7 +91,10 @@ Five maintenance rules:
 
 ## Review Process
 
-0. **Get the change**: if the target is a branch or PR in a git repository, read it with `git diff <base>...HEAD` (usually `main...HEAD`) and `git log --oneline <base>..HEAD` for the commit story, then open full files with `git show HEAD:<path>` only where the diff lacks context. Outside a git repo, review the diff or files you were given.
+Before step 1:
+
+- **Get the change**: if the target is a branch or PR in a git repository, read it with `git diff <base>...HEAD` (usually `main...HEAD`) and `git log --oneline <base>..HEAD` for the commit story, then open full files with `git show HEAD:<path>` only where the diff lacks context. Outside a git repo, review the diff or files you were given.
+- **Check remembered findings**: if the project has `.plumbline/findings.md`, read it. Call out a change that reintroduces a `fixed` finding (a regression) or adds to an `open` one, and credit a change that resolves one. Don't edit the file from here; that happens when the user runs **red-flags** or **apply-fixes**.
 1. **Apply the "designed this way" test**: Does the modification look native or bolted-on?
 2. **Check for incremental complexity**: Did the change add special cases, dependencies, parameters, or flags?
 3. **Run repetition audit**: Did the change introduce or perpetuate duplication?

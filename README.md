@@ -137,6 +137,12 @@ say so in one line. Don't apply fixes unless I ask.
 
 This is an instruction, not a hook: the agent follows it most of the time but can skip it, especially late in a long session. The Claude Code hook runs every time.
 
+## Remembering findings
+
+Reviews can remember what they found. Say yes when `red-flags` offers to save its findings and it writes `.plumbline/findings.md` in your project: one entry per problem, keyed by what the problem is rather than a line number, with its status (`open`, `fixed`, `accepted` with a reason) and dates. Commit it with your code so the team shares it.
+
+From then on, each review leads with what changed (new findings, and fixed ones that came back), keeps still-open ones to a line, and stops re-reporting trade-offs you accepted. `apply-fixes` marks what it fixes, and `code-evolution` flags a PR that reintroduces a fixed problem.
+
 ## What's Inside
 
 ### Structure & Modules
