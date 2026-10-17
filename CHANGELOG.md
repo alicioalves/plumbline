@@ -1,9 +1,14 @@
 # Changelog
 
-## Unreleased
+## 1.7.0
 
 ### Added
 
+- **Remembering findings.** Optional `.plumbline/findings.md` in your project, keyed by concept. `red-flags` and `design-review` reconcile each review with it (new, still open, regressed, fixed) and update it; `apply-fixes` marks fixes; `code-evolution` flags regressions. Accepted entries with a reason count as ACCEPTED rationale.
+- **`apply-fixes`: coverage check, commit mode, flaky retry.** Flags fixes no test reaches, can commit each fix separately (message names the flag), and re-runs once before reverting on an unrelated test failure.
+- **Design review on pull requests.** Reusable GitHub Actions workflow (`plumbline-review.yml`) running `code-evolution` on a PR diff, commenting only on boundary/root-cause/regression findings. Read-only, forks skipped, prompt-injection guard, actions pinned to SHAs. See `docs/ci-review.md`.
+- **Docs site** at https://tomymaritano.github.io/plumbline/, built from the skills on each release.
+- **Security and privacy** section in the README.
 - **Design check for other agents.** README snippet for `AGENTS.md` (and equivalents) that gives Codex, Cursor, Grok Build and other agents the review-on-stop behavior as an instruction, with the trade-off against the Claude Code hook spelled out.
 
 ## 1.6.0
