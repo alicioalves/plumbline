@@ -12,7 +12,7 @@ claude plugin eval . --eval-dir evals/red-flags --ablation with-without --judge-
 - Add `--case '05-*'` to run a single case. Only `*` wildcards work; bracket and brace patterns don't.
 - Add `-j 4` to run up to 4 runs at once. They share your rate limit.
 - Every case pins the agent to `model: opus`. Keep the judge on a different model (`sonnet`) so it never grades its own model's answers.
-- A full run (10 cases × 3 runs × 2 arms) costs **about $16** of API-equivalent tokens, $4 of it judging. An earlier run cost $42, $31 of it judging, because a `no-phantom-code` grader sent the whole transcript to the judge; that grader has been removed. On a claude.ai login, this comes out of your subscription usage.
+- A full run (11 cases × 3 runs × 2 arms) costs **about $16** of API-equivalent tokens, $4 of it judging. An earlier run cost $42, $31 of it judging, because a `no-phantom-code` grader sent the whole transcript to the judge; that grader has been removed. On a claude.ai login, this comes out of your subscription usage.
 
 ## Cases
 
@@ -28,6 +28,7 @@ claude plugin eval . --eval-dir evals/red-flags --ablation with-without --judge-
 | `08-buried-passthrough` | "Anything off in this user service?", about 150 lines | pass-through buried among real methods; caching decorator forwarding 5 of 6 methods |
 | `09-layered-function` | "Take a look at `compute_price`" | special cases piled into a general function; hard to describe |
 | `10-caller-retries` | Four call sites plus the client | identical retry loop at every caller; the client should absorb it |
+| `11-rust-bindings` | "Anything off in this workspace?", Rust core + Node/Python/WASM bindings | every binding re-implements the core's vocabulary (format names, error codes, options merge); `encode_rgba` pushes `bytes_in` correction onto callers; a documented best-effort ICC trade-off that should not be the headline |
 
 The code for each case is inlined in its prompt. The prompts don't hint at the smells, so the baseline has to find them on its own.
 
