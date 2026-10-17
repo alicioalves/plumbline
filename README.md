@@ -13,7 +13,7 @@ Skills activate automatically and push your agent to ask questions like:
 - *Can this method be understood without reading another one in a different file?*
 - *Is error handling pushing work onto callers that the module could handle itself?*
 
-You can also invoke them directly. Use `/plumbline:red-flags` to trigger a design smell scan, `/plumbline:deep-modules` to check interface depth and `/plumbline:design-it-twice` to compare alternatives before committing. (On platforms that install the skills without the plugin namespace, such as skills.sh, drop the `plumbline:` prefix.)
+You can also invoke them directly. Use `/plumbline:red-flags` to trigger a design smell scan, `/plumbline:apply-fixes` to apply its findings with the tests as a safety net, `/plumbline:deep-modules` to check interface depth and `/plumbline:design-it-twice` to compare alternatives before committing. (On platforms that install the skills without the plugin namespace, such as skills.sh, drop the `plumbline:` prefix.)
 
 ## Installation
 
@@ -43,7 +43,7 @@ codex plugin marketplace add tomymaritano/plumbline
 codex plugin add plumbline@plumbline
 ```
 
-Older Codex versions only get the 16 skills, via a manual symlink — see [.codex/INSTALL.md](.codex/INSTALL.md) for that fallback and full troubleshooting.
+Older Codex versions only get the 17 skills, via a manual symlink — see [.codex/INSTALL.md](.codex/INSTALL.md) for that fallback and full troubleshooting.
 
 ### Cursor
 
@@ -53,7 +53,7 @@ Cursor doesn't yet have a one-line "install from a GitHub URL" flow for unlisted
 git clone https://github.com/tomymaritano/plumbline.git ~/.cursor/plugins/local/plumbline
 ```
 
-Then check the **Customize** panel in the sidebar to confirm Plumbline and its 16 skills are listed.
+Then check the **Customize** panel in the sidebar to confirm Plumbline and its 17 skills are listed.
 
 ### OpenCode
 
@@ -89,7 +89,7 @@ grok plugin marketplace add tomymaritano/plumbline
 grok plugin install plumbline
 ```
 
-Or install straight from the repo with `grok plugin install tomymaritano/plumbline`. Add `--trust` to skip the confirmation prompt, then run `/plugin` to check that Plumbline and its 16 skills are listed.
+Or install straight from the repo with `grok plugin install tomymaritano/plumbline`. Add `--trust` to skip the confirmation prompt, then run `/plugin` to check that Plumbline and its 17 skills are listed.
 
 ### GitHub Copilot CLI
 
@@ -164,6 +164,7 @@ It's off by default. In Claude Code, turn it on from `/config` (the **Review on 
 | `red-flags` | 18-flag design smell scan covering structure, boundaries (including adapters that re-implement the core's vocabulary), documentation, naming, and process. Separates real problems from documented trade-offs, has a reading strategy for large multi-package targets, and ships Python and TypeScript guides |
 | `design-review` | Structured review funnel from complexity triage through structural, interface, and surface checks |
 | `diagnose` | Routes a vague symptom or complaint to the most relevant skill via a decision tree |
+| `apply-fixes` | Applies a report's findings one fix at a time, running the tests after each and reverting any fix that breaks them; asks before changing a public interface |
 
 ## Attribution
 

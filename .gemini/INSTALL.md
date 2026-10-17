@@ -28,7 +28,7 @@ or from a terminal:
 gemini skills list --all
 ```
 
-You should see all 16 `plumbline` skills (`deep-modules`, `red-flags`, `design-review`, etc.).
+You should see all 17 `plumbline` skills (`deep-modules`, `red-flags`, `design-review`, etc.).
 
 ## Updating
 
