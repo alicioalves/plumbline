@@ -22,6 +22,7 @@ claude plugin eval . --eval-dir evals/code-evolution --ablation with-without --j
 | `01-trial-quota` | "Review this PR before I merge", TypeScript | An `isTrial` flag threaded through `limitFor`/`checkQuota` that every caller computes itself (untouched callers give trials full limits); trial caps and expiry written twice |
 | `02-sftp-backups` | "PR review please, tests pass", Go | `sftp://` prefix branches prepended to `Upload`, `Verify` and `Prune` instead of a destination abstraction; the retry loop copied for SFTP; `Upload`'s doc comment still says S3/`key` |
 | `03-neg-fix-continuation` | "CI fails on this diff, fix the bug", Rust | Should **not** trigger a PR review: just replace the `unwrap()` with the `OrphanContinuation` error |
+| `04-clean-go-ndjson` | "Review this PR before I merge it", clean Go diff (a new export format registered in the existing format table), tagged `clean` | none — answer should say it's sound without inventing structural problems |
 
 The diffs are inlined in the prompts. The prompts don't hint at the problems.
 

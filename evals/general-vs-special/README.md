@@ -21,6 +21,7 @@ claude plugin eval . --eval-dir evals/general-vs-special --ablation with-without
 | `01-order-query` | "Is this interface still the right shape?", Python query helper + 3 callers | `search` grows one flag per caller (`for_admin_panel`, `mobile_client`, `include_line_items_for_export`); returns `None` for no rows so every caller special-cases it |
 | `02-playlist` | "Right interface before other teams depend on it?", TypeScript | getters/setters expose `tracks` and `currentIndex`, so callers re-implement index bookkeeping; `addTrackForRadioMode` bakes one feature's policy into the shared class |
 | `03-neg-open-range` | Bug fix in an HTTP Range parser, Go: should **not** trigger the skill | none (the `capForMobile` parameter is bait) |
+| `04-clean-rust-text-buffer` | "Is this interface general enough, or do I need editor-specific methods?", clean Rust code, tagged `clean` | none — answer should say it's sound without inventing structural problems |
 
 ## Graders
 

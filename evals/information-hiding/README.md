@@ -23,6 +23,7 @@ claude plugin eval . --eval-dir evals/information-hiding --ablation with-without
 | `01-audit-export` | "Adding one field touches every file, better structure?", Go package + consumer | Read/transform/write split by execution step, with the line format shared through `[][]string`; `siem.CountDenied` reads the export CSV by column index with no shared definition |
 | `02-session-migration` | "Moving Redis → Postgres, one-file change?", Python | The `sess:{user}:{device}` key scheme is built and parsed in three other modules; the `client` property exposes the raw Redis connection and stored representation |
 | `03-neg-explain-frame` | "Explain what `parse_frame` returns": should **not** trigger | None. `write_frame` re-encodes the header layout and magic number as a distractor |
+| `04-clean-go-checkpoint` | "Moving to SQLite, is the storage format contained?", clean Go code, tagged `clean` | none — answer should say it's sound without inventing structural problems |
 
 The code for each case is inlined in its prompt. The prompts describe the change the user is facing, not the leak.
 

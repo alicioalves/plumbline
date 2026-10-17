@@ -35,4 +35,5 @@ npm test                         # hook tests (node:test)
 - Bump versions only with `scripts/bump-version.sh <version>`, never by hand, and record the change in `CHANGELOG.md`.
 - Eval runs cost real money (see each suite's README). Don't start one unless asked.
 - Every skill has its own suite in `evals/<skill>/` (3 cases, `runs: 2`, about $3 per run). After changing a skill's `description`, re-run its suite and the suites of the skills its "Not for … (use X)" clause names; each suite README lists them under "When to re-run".
+- Each skill suite also has a `04-clean-*` case (tag `clean`: well-designed code, the answer should say so) and a `05-holdout-*` case (tag `holdout`). Held-out cases are for checking trigger changes without overfitting: when tuning a description, iterate on the other cases and only run `--tag holdout` to confirm at the end. Don't read or rewrite held-out cases to make them pass.
 - `evals/red-flags-scale/` and `evals/apply-fixes/` need Claude Code's sandbox (Bash, Edit, `--scaffold`). Run them on macOS, Linux or WSL2 with the commands in `evals/MAC.md`.

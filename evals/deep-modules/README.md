@@ -23,6 +23,7 @@ claude plugin eval . --eval-dir evals/deep-modules --ablation with-without --jud
 | `01-upload-sdk` | "Using it feels clunky, thoughts on the API?", TypeScript SDK and two call sites | Six tiny classes that callers must compose in a fixed sequence for one upload (classitis); `ChunkUploader` and `UploadFinalizer` only forward to `StorageGateway` |
 | `02-service-config` | "Adding a setting is too much ceremony", Go service | `Config` mirrors a string map, so every consumer knows keys, parses and applies defaults (inconsistently); `cfg` threaded through `run`/`newRouter` as a pass-through variable |
 | `03-neg-lru-recency` | Bug fix: should **not** trigger | None. `get` doesn't refresh recency; nearby `CachedPriceLookup` forwarding methods are a distractor |
+| `04-clean-go-atomicfile` | "Does this interface hold up, or is it too thin?", clean Go code, tagged `clean` | none — answer should say it's sound without inventing structural problems |
 
 The code for each case is inlined in its prompt. The prompts describe a symptom, not the diagnosis, and don't use the book's vocabulary.
 

@@ -23,6 +23,7 @@ claude plugin eval . --eval-dir evals/pull-complexity-down --ablation with-witho
 | `01-conn-pool` | "New clients always go wrong, how would you reshape the API?", Rust pool + 2 clients | Five `PoolConfig` knobs both callers set identically (with an unenforced `min_idle`/`max_size` pair); callers must start maintenance and choose `release` vs `discard`, which `publish`'s `?` gets wrong |
 | `02-analytics-client` | "New jobs take longer than they should", TypeScript client + 2 jobs | `RangeTooLargeError` leaves every caller to window ranges over 31 days; manual cursor pagination repeated in every job |
 | `03-neg-timeout-bug` | Bug fix: should **not** trigger | None. `time.Duration(TimeoutSeconds)` is 10ns; the knob-heavy `Options` struct is a distractor |
+| `04-clean-rust-pool` | "Does it ask too much of callers?", clean Rust code, tagged `clean` | none — answer should say it's sound without inventing structural problems |
 
 The code for each case is inlined in its prompt. The prompts describe the pain, not where the complexity should live.
 
