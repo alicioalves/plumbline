@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: 01-repo-on-disk
+description: A ~2,000-line TypeScript monorepo on disk (core + CLI + HTTP + SDK adapters) with git history. Measures the reading strategy (Read calls), git co-change use, and the Vocabulary Not Owned finding.
+tags: [sandbox, scale]
+context:
+  scaffold_script: fixture.sh

@@ -33,3 +33,5 @@ npm test                         # hook tests (node:test)
 - Commit messages use conventional prefixes: `feat:`, `fix:`, `docs:`, `chore:`, `evals:`.
 - Bump versions only with `scripts/bump-version.sh <version>`, never by hand, and record the change in `CHANGELOG.md`.
 - Eval runs cost real money (see each suite's README). Don't start one unless asked.
+- Every skill has its own suite in `evals/<skill>/` (3 cases, `runs: 2`, about $3 per run). After changing a skill's `description`, re-run its suite and the suites of the skills its "Not for … (use X)" clause names; each suite README lists them under "When to re-run".
+- `evals/red-flags-scale/` and `evals/apply-fixes/` need Claude Code's sandbox (Bash, Edit, `--scaffold`). Run them on macOS, Linux or WSL2 with the commands in `evals/MAC.md`.
