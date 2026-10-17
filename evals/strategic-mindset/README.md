@@ -22,6 +22,7 @@ claude plugin eval . --eval-dir evals/strategic-mindset --ablation with-without 
 | `01-export-variants` | "Shipped fast last quarter, is it holding up?", TypeScript | Per-customer copies of the CSV export dispatched by org ID; regex post-processors patching dates and quotes in the finished CSV; a scoped investment plan before the next two customer formats |
 | `02-webhook-ingest` | "Rushed before launch, keep building on it?", Rust | `with_retry` sniffing error strings and treating any duplicate-key error as success in place of idempotency; three copy-pasted payment handlers; a scoped investment plan before subscriptions/disputes |
 | `03-neg-dry-run` | "Add a `--dry-run` flag", Python script with TODOs | Should **not** trigger a debt assessment: just the flag |
+| `04-clean-py-retention` | "Written under a deadline, did we cut corners?", clean Python code, tagged `clean` | none — answer should say it's sound without inventing structural problems |
 
 The code for each case is inlined in its prompt. The prompts don't hint at the problems.
 

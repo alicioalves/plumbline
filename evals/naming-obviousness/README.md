@@ -21,6 +21,7 @@ claude plugin eval . --eval-dir evals/naming-obviousness --ablation with-without
 | `01-session-cache` | "Hard to follow on first read", Go session cache | vague wide-scope names (`Process`, `Handle`, `flag`, package-level `m`); `ttl` is a duration in `Config` but an absolute expiry in `entry` (and `id` is a session ID in one function, a user ID in another) |
 | `02-hard-to-name` | "Can't come up with a good name for this", Rust token manager | `process_and_update` is hard to name because it does five jobs (split, don't rename); `is_valid(&mut self)` silently refreshes over the network and writes to disk |
 | `03-neg-rename-var` | "Rename `d` to `record`", Python: should **not** trigger the skill | none (`proc`, `x`, `conv` are bait) |
+| `04-clean-ts-due-dates` | "Check the naming and readability", clean TypeScript code, tagged `clean` | none — answer should say it's sound without inventing structural problems |
 
 ## Graders
 

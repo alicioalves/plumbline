@@ -1,0 +1,8 @@
+---
+type: llm
+focus: last_message
+weight: 1
+---
+PASS if the answer diagnoses the problem as one of error / exception design in `ProfileStore` (rather than testing or carelessness): the store turns ordinary, harmless situations into exceptions that every caller must know about and that callers almost always neutralise the same way, AND supports this with at least two concrete examples from the code, such as: `NothingToUpdateError` for an empty patch (the route just returns the current profile); `AvatarUnchangedError` when the same picture is re-uploaded (unhandled, hence the 500 incident); `remove` throwing for an already-deleted or missing profile (the erasure job swallows both); `get` throwing `ProfileNotFoundError` / `ProfileDeletedError` where `/me` substitutes a default, AND explains why this produces both reported symptoms (try/catch walls at every call site, and a newly reachable case crashing because one caller didn't know about it), AND points to the matching remedy: redefine those operations so the conditions are not errors (an empty patch or unchanged avatar is a successful no-op, `remove` is idempotent "ensure deleted", `get` returning a missing/optional result or a default), keeping exceptions only for conditions callers must genuinely act on such as `DisplayNameTakenError`. Naming the relevant lens or skill (error design, defining errors out of existence) is fine but not required.
+
+FAIL if the answer's main diagnosis is testing, logging, or adding the missing `catch` branch to the avatar route; if it recommends only a shared helper or middleware that maps each exception to a response while keeping all five exceptions; or if it gives a generic review list without a diagnosis of what kind of problem this is.

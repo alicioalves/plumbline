@@ -21,6 +21,7 @@ claude plugin eval . --eval-dir evals/error-design --ablation with-without --jud
 | `01-flag-store` | "Error handling is getting out of hand", Python feature-flag store + callers | `FlagNotDefined` / `FlagNotFound` / `FlagAlreadyExists` are swallowed identically by every caller (should be defined out); `load` raises three types its one caller handles identically (aggregate or mask) |
 | `02-upload-handlers` | "Error handling is longer than the logic", Rust HTTP handlers | every handler matches each `ParamError`/`StorageError` variant itself (aggregate at the top with `?`); `BlobDir::save` swallows an fsync failure and returns `Ok` (masking an error the caller needs) |
 | `03-neg-compound-duration` | Small feature in a TypeScript duration parser: should **not** trigger the skill | none (four error classes and a catch chain in the caller are bait) |
+| `04-clean-py-disk-cache` | "Review the error handling", clean Python code, tagged `clean` | none — answer should say it's sound without inventing structural problems |
 
 ## Graders
 

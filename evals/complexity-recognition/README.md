@@ -22,6 +22,7 @@ claude plugin eval . --eval-dir evals/complexity-recognition --ablation with-wit
 | `01-plan-pricing` | "Harder to work with than it should be, can't say why", Python | Plan facts spread over parallel position-indexed lists and plan-name if-chains (change amplification); `display_price` silently depends on `_fx_rates` filled as a side effect of `invoice_total` (hidden dependency) |
 | `02-notify-dispatch` | "Nobody wants to touch it, new people ship bugs", Go | Per-channel behaviour split over four `switch` statements (change amplification); untyped `Data` map whose per-channel keys are an implicit contract, so `rateLimitKey` puts every SMS and push user in one bucket (obscurity / unknown unknown) |
 | `03-neg-explain-coalesce` | "Walk me through this function", TypeScript | Should **not** trigger a complexity diagnosis: just an accurate explanation |
+| `04-clean-py-rollouts` | "Feels like it'll be hard to work with, can't say why", clean Python code, tagged `clean` | none — answer should say it's sound without inventing structural problems |
 
 The code for each case is inlined in its prompt. The prompts don't hint at the problems.
 

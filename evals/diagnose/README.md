@@ -22,6 +22,7 @@ claude plugin eval . --eval-dir evals/diagnose --ablation with-without --judge-m
 | `01-payment-providers` | "Adding a provider touches six files and we miss things", Python | Routed to information hiding: provider knowledge is scattered across checkout, refunds, webhooks, fees and the model; remedy is one adapter per provider; backed by concrete leaks (`psp_reference`, `/ 100`, fees default 0) |
 | `02-unnameable-class` | "I can't come up with a name for this class", TypeScript | Routed to naming-obviousness then design-it-twice: the class does six jobs, so no name fits; propose and compare alternative decompositions instead of picking a name |
 | `03-neg-nil-map` | "Panics with nil map, fix it", Go | Should **not** route anything: just initialize the map |
+| `04-clean-ts-money` | "Something about it bugs me, not sure what kind of review it needs", clean TypeScript code, tagged `clean` | none — answer should say it's sound without inventing structural problems |
 
 The code for each case is inlined in its prompt. The prompts don't hint at the cause.
 

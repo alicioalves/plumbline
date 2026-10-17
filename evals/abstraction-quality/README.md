@@ -21,6 +21,7 @@ claude plugin eval . --eval-dir evals/abstraction-quality --ablation with-withou
 | `01-mirrored-layers` | "The layering feels redundant", TypeScript repo / service / routes | `SubscriptionService` mirrors `SubscriptionRepository` method-for-method; the lifecycle rules it should own sit in the HTTP handlers |
 | `02-leaky-eventlog` | "Does this abstraction hold up?", Go event log | `Log.Append` returns before the event is durable and `Flush` isn't on the interface (abstraction omits a detail callers need); `RetryingLog` forwards 3 of 4 methods to add retry to one |
 | `03-neg-cache-miss` | Bug fix in a caching wrapper, Python: should **not** trigger the skill | none (the wrapper's pass-through `list_prefix` is bait) |
+| `04-clean-ts-sessions` | "Teammate says it's a wrapper that adds nothing, does it pull its weight?", clean TypeScript code, tagged `clean` | none — answer should say it's sound without inventing structural problems |
 
 ## Graders
 

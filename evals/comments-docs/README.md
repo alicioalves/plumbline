@@ -21,6 +21,7 @@ claude plugin eval . --eval-dir evals/comments-docs --ablation with-without --ju
 | `01-limiter-comments` | "Review the comments before we publish", TypeScript rate limiter | comments restate names/code while interface docs omit return meaning, units and window semantics; stale docs (`windowSeconds` default 60 vs `windowMs = 30_000`, `@returns null` vs a number) that the middleware trusted, so it never blocks |
 | `02-reconcile-docs` | "Review the doc comments before hand-off", Go reconciler | the `Reconcile` comment is a chain of "unless"/"except" clauses, signalling a function that mixes modes behind boolean flags; `Spec` field comments restate names and omit units (`DrainTimeout` is seconds) and zero-value meaning (`MaxSurge` 0 → 1) |
 | `03-neg-explain-coalesce` | "What does `coalesce` do with `gap`?", Rust: should **not** trigger the skill | none (the one-line "Merges byte ranges." doc is bait) |
+| `04-clean-rust-ring-buffer` | "Review the comments before we publish the crate", clean Rust code, tagged `clean` | none — answer should say it's sound without inventing structural problems |
 
 ## Graders
 

@@ -23,6 +23,7 @@ claude plugin eval . --eval-dir evals/module-boundaries --ablation with-without 
 | `01-notifier-split` | "I split it, teammate says merge it back. Who's right?", Python, 3 classes + 2 call sites | The split is false: every caller runs select → render → fill `to` → dispatch, and the channel set and payload dict format are known by all three classes |
 | `02-tenant-store` | "Should I break up store.rs, and where?", Rust | Blob storage and tenant quota/billing share a struct but no knowledge (split them); the new boundary must keep the blob format and stored-size calculation on the storage side |
 | `03-neg-percent-coupon` | Small feature: should **not** trigger | None. Add the `percent` coupon branch to `computeTotals` |
+| `04-clean-py-bank-import` | "Teammate wants to merge these two modules, should we?", clean Python code, tagged `clean` | none — answer should say it's sound without inventing structural problems |
 
 The code for each case is inlined in its prompt. The prompts ask the merge/split question without hinting at the answer.
 
