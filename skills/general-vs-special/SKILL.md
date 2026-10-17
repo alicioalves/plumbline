@@ -1,6 +1,6 @@
 ---
 name: general-vs-special
-description: "Evaluates whether interfaces are appropriately general-purpose. Use when checking interface generality, when if-branches or parameters serve only one caller, or when getters/setters expose internal representation. Not for information leakage across boundaries (use information-hiding) or auditing configuration parameters (use pull-complexity-down)."
+description: "Use when a shared function or class has grown flags, parameters or if-branches for one caller (\"we keep adding booleans to search()\"), returns special values every caller must check, exposes getters/setters for its internal state, or the user asks whether an interface is the right shape before others depend on it. Evaluates whether interfaces are general-purpose with special cases pushed to the edges. Not for knowledge leaking across modules (use information-hiding) or auditing configuration parameters (use pull-complexity-down)."
 argument-hint: "[file or module path]"
 allowed-tools: Read, Grep
 ---

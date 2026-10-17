@@ -1,6 +1,6 @@
 ---
 name: abstraction-quality
-description: "Evaluates whether abstractions provide a genuinely different way of thinking or are structurally shallow. Use when adjacent layers feel redundant, wrappers add boilerplate without depth, or an abstraction feels leaky. Not for a single module's interface-to-implementation ratio (use deep-modules) or information leakage across boundaries (use information-hiding)."
+description: "Use when layers feel redundant or mirror each other (\"the service just mirrors the repository\", \"this wrapper adds nothing\"), a decorator or adapter re-exposes what it wraps, or an abstraction leaks what it was meant to hide (callers must know when data is really saved, flushed or retried). Evaluates whether each layer offers a genuinely different way of thinking about the problem. Not for one module's interface-to-implementation ratio (use deep-modules) or knowledge leaking across unrelated modules (use information-hiding)."
 argument-hint: "[file or module path]"
 allowed-tools: Read, Grep
 ---

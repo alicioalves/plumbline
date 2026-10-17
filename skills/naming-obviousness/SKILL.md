@@ -1,6 +1,6 @@
 ---
 name: naming-obviousness
-description: "Reviews naming quality and code obviousness via the isolation test, scope-length principle, and consistency audit. Use when names feel vague, something is hard to name (a design signal, not a vocabulary problem), or behavior isn't obvious on first read. Not for comment quality or documentation (use comments-docs)."
+description: "Use when the user can't come up with a good name for something (\"what should I call this?\", \"none of these names fit\"), names feel vague or misleading, the same word means different things, or code isn't obvious on first read. Treats naming difficulty as a design signal, not a vocabulary problem, using the isolation test, scope-length principle and consistency audit. Not for comment quality or documentation (use comments-docs)."
 argument-hint: "[file or module path]"
 allowed-tools: Read, Grep
 ---

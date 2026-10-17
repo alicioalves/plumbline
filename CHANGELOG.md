@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.8.0
+
+### Changed
+
+- **Symptom-first skill descriptions.** Lens skills now open with the symptoms users describe ("adding a config option is all ceremony", "one field means editing every file", "every new client gets it wrong", "PR review please") before the book's terms. `red-flags` defers to the matching lens when the user names a concern; `diagnose` triggers only when the user doesn't know what kind of problem they have. Measured across all 13 lens suites: the right skill now fires on 92% of positive cases (was 69%) and 92% of held-out cases (was 62%), negatives stay at 100%. See `evals/TRIGGERS.md`.
+- **Saying it's fine.** `diagnose` and `complexity-recognition` lead with a clean verdict when the code shows no symptoms, instead of hunting for something to restructure (`diagnose` clean case 0.50 → 1.00).
+
 ## 1.7.0
 
 ### Added

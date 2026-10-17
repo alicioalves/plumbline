@@ -1,6 +1,6 @@
 ---
 name: complexity-recognition
-description: "Diagnoses whether complexity exists and where it comes from, using the three-symptom, two-root-cause framework. Use when code feels harder to work with than it should but the specific problem is unclear. Not for scanning known design smells (use red-flags) or evaluating a module's depth (use deep-modules)."
+description: "Use when code feels harder to work with than it should but the user can't say why (\"this module is painful and I don't know what's wrong\"), using the three-symptom, two-root-cause framework (change amplification, cognitive load, unknown unknowns; dependencies and obscurity). Says plainly when the code is fine. Not for scanning known design smells (use red-flags) or a module's depth (use deep-modules)."
 argument-hint: "[file or module path]"
 allowed-tools: Read, Grep
 ---
@@ -84,5 +84,7 @@ When you find complexity, you have two options:
 4. **Hunt unknown unknowns**: Hidden dependencies, implicit invariants, undocumented constraints?
 5. **Trace root causes**: Dependency or obscurity?
 6. **Recommend**: Eliminate the complexity, or encapsulate it in a deep module
+
+**When nothing shows up, say so.** If a likely change touches one place, the code needs no hidden knowledge, and you found no unknown unknowns, the verdict is that the module is not more complex than its job. Say that first and plainly. The user's unease may come from unfamiliarity, size or the problem's own difficulty; name that if it fits, but don't promote small preferences (an extra helper, a renamed variable) to complexity findings, and don't recommend restructuring code that passes all three symptom checks.
 
 Unlike other lenses, no individual red-flags signal routes here directly — complexity-recognition is the entry point when red-flags itself doesn't pinpoint a specific named flag (see red-flags' own "Not for diagnosing why code feels complex" disambiguation).

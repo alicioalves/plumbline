@@ -1,6 +1,6 @@
 ---
 name: comments-docs
-description: "Reviews comment quality and documentation practices: the four comment types, comments-first workflow, and comment rot. Use when reviewing comments or docs, when comments just repeat the code, or when something is hard to describe in a sentence. Not for naming or code obviousness (use naming-obviousness)."
+description: "Use when the user asks to review comments, doc comments or documentation (\"review the comments before we publish\", \"are these docs any good?\"), when comments repeat the code or have drifted from it, or when an interface needs a long \"unless/except\" explanation. Reviews the four comment types, comments-first workflow and comment rot. Not for naming or code obviousness (use naming-obviousness)."
 argument-hint: "[file or module path]"
 allowed-tools: Read, Grep
 ---

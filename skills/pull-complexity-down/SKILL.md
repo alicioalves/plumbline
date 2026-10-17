@@ -1,6 +1,6 @@
 ---
 name: pull-complexity-down
-description: "Checks whether complexity is pushed to callers or absorbed by implementations — the direction complexity flows. Use when callers must do significant setup, handle errors the module could resolve, or configure things they don't understand. Not for module depth (use deep-modules), knowledge leakage (use information-hiding), or exception strategy once an error must surface (use error-design)."
+description: "Use when every new caller gets an API wrong, callers repeat the same setup, retries, pagination or validation, or they must pick configuration values they can't judge (\"every time someone writes a new client against this, something breaks\", \"why does each caller have to chunk the date range?\"). Checks whether complexity is pushed up to callers or absorbed by the module, including configuration parameters that don't earn their place. Not for module depth in general (use deep-modules), knowledge leaking between modules (use information-hiding), or which exceptions to raise once an error must surface (use error-design)."
 argument-hint: "[file or module path]"
 allowed-tools: Read, Grep
 ---
