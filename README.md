@@ -1,3 +1,6 @@
+<img width="1280" height="640" alt="Hero social preview@1x" src="https://github.com/user-attachments/assets/5348c0f8-6efc-4389-a4c0-d1d81f6e55d1" />
+
+
 <h1 align="center">Plumbline</h1>
 
 AI agents can write working code, but they don't stop to consider effective design unless asked. Plumbline is a set of skills inspired by John Ousterhout's [*A Philosophy of Software Design*](https://web.stanford.edu/~ouster/cgi-bin/aposd.php). Like a builder's plumb line, each skill gives your agent a simple, concrete test for whether the design is still standing straight, during implementation and review.
