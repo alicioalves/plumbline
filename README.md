@@ -121,7 +121,7 @@ Pi auto-discovers the `skills/` directory with no extra config.
 | --- | --- |
 | `deep-modules` | Module depth, shallow modules, classitis, pass-through methods, interface vs implementation |
 | `module-boundaries` | Merge vs split, conjoined methods, method splitting, dependency minimization |
-| `information-hiding` | Information leakage, temporal decomposition, partial hiding, false encapsulation |
+| `information-hiding` | Information leakage, temporal decomposition, partial hiding, false encapsulation, git co-change evidence |
 | `pull-complexity-down` | Caller burden, configuration parameters, the core asymmetry |
 
 ### Abstraction & Generality
@@ -145,14 +145,14 @@ Pi auto-discovers the `skills/` directory with no extra config.
 | --- | --- |
 | `strategic-mindset` | Strategic vs tactical, investment rule, tactical tornado |
 | `design-it-twice` | Generate alternatives, compare on criteria, synthesize |
-| `code-evolution` | "Designed this way" standard, repetition, technical debt |
+| `code-evolution` | "Designed this way" standard, repetition, technical debt; reviews a branch or PR straight from `git diff` |
 | `complexity-recognition` | Change amplification, cognitive load, unknown unknowns |
 
 ### Diagnostic
 
 | Skill | Covers |
 | --- | --- |
-| `red-flags` | Design smell scan covering structure, boundaries, documentation, naming, and process |
+| `red-flags` | 18-flag design smell scan covering structure, boundaries (including adapters that re-implement the core's vocabulary), documentation, naming, and process. Separates real problems from documented trade-offs, has a reading strategy for large multi-package targets, and ships Python and TypeScript guides |
 | `design-review` | Structured review funnel from complexity triage through structural, interface, and surface checks |
 | `diagnose` | Routes a vague symptom or complaint to the most relevant skill via a decision tree |
 
