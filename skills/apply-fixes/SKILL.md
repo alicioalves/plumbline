@@ -65,6 +65,8 @@ End with a short summary:
 - **Unprotected**: applied fixes that no test reaches, with what to check by hand
 - `git diff --stat` for the whole run (in commit mode, `git log --oneline` for the new commits instead)
 
+If the project has `.plumbline/findings.md`, mark each applied fix's entry `fixed` with today's date, and add a note to entries whose fix was reverted. In commit mode, include the file in the last fix's commit.
+
 Without commit mode, don't commit: leave the changes for the user to review.
 
 ## Boundaries
