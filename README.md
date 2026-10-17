@@ -116,6 +116,12 @@ pi install git:github.com/tomymaritano/plumbline
 
 Pi auto-discovers the `skills/` directory with no extra config.
 
+## Review on stop (opt-in)
+
+Plumbline can check the code your agent writes, not only the code you ask it to review. When it's on and a turn writes a lot of code (80+ lines by default) or creates a new code file, Plumbline asks Claude once, before it finishes, to run `red-flags` on those files and report only what triggered. Small edits, docs and config files never trigger it, and it never applies fixes on its own.
+
+It's off by default. In Claude Code, turn it on from `/config` (the **Review on stop** row under Plumbline) or `/plugin` → Plumbline → configure, and adjust **Review threshold (lines)** there too. It runs on Claude Code only; other agents install the skills without the hook.
+
 ## What's Inside
 
 ### Structure & Modules
