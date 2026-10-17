@@ -1,0 +1,29 @@
+{
+  "name": "plumbline",
+  "version": "1.3.1",
+  "description": "A plumb line for AI coding — agent skills that check code against the philosophy of software design.",
+  "author": {
+    "name": "Tomás Maritano"
+  },
+  "homepage": "https://github.com/tomymaritano/plumbline",
+  "repository": "https://github.com/tomymaritano/plumbline",
+  "license": "MIT",
+  "keywords": [
+    "software-design-patterns",
+    "software-philosophy",
+    "code-quality",
+    "design-review"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Plumbline",
+    "shortDescription": "A plumb line for AI coding",
+    "longDescription": "Agent skills that check code against the philosophy of software design.",
+    "developerName": "Tomás Maritano",
+    "category": "Productivity",
+    "capabilities": [
+      "Instructions"
+    ],
+    "websiteURL": "https://github.com/tomymaritano/plumbline"
+  }
+}

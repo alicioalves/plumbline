@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "plumbline",
+  "version": "1.3.1",
+  "description": "A plumb line for AI coding — agent skills that check code against the philosophy of software design.",
+  "author": {
+    "name": "Tomás Maritano",
+    "url": "https://github.com/tomymaritano"
+  },
+  "homepage": "https://github.com/tomymaritano/plumbline",
+  "repository": "https://github.com/tomymaritano/plumbline",
+  "license": "MIT",
+  "keywords": [
+    "software-design-patterns",
+    "software-philosophy",
+    "code-quality",
+    "design-review"
+  ]
+}

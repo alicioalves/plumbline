@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "plumbline-plugins",
+  "owner": {
+    "name": "Tomás Maritano",
+    "url": "https://github.com/tomymaritano"
+  },
+  "metadata": {
+    "description": "Plumbline plugin marketplace",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "plumbline",
+      "source": "./",
+      "description": "A plumb line for AI coding — agent skills that check code against the philosophy of software design.",
+      "version": "1.3.1",
+      "category": "productivity",
+      "tags": [
+        "software-design",
+        "code-quality",
+        "design-review",
+        "skills"
+      ],
+      "homepage": "https://github.com/tomymaritano/plumbline",
+      "repository": "https://github.com/tomymaritano/plumbline",
+      "strict": true
+    }
+  ]
+}
