@@ -2,7 +2,7 @@
 name: apply-fixes
 description: "Applies the findings of a design review one fix at a time, running the project's tests after each and reverting any fix that breaks them. Use when the user asks to apply, implement or fix the findings of a red-flags scan, design-review or another Plumbline report, or says to go ahead with the recommended design changes. Not for fixing a specific bug, error or failing test (fix it directly), and not for reviewing code (use red-flags or design-review first)."
 argument-hint: "[report file, or which findings to apply]"
-allowed-tools: Read, Grep, Edit, Write, Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git checkout:*)
+allowed-tools: Read, Grep, Edit, Write, Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git checkout:*), Bash(git add:*), Bash(git commit:*)
 ---
 
 # Apply Fixes
@@ -34,12 +34,14 @@ Use the report already in the conversation, or read the file the user names. If 
 1. **Clean tree**: run `git status`. If there are uncommitted changes, ask whether to continue: reverting a failed fix with `git checkout -- <file>` would also discard the user's own edits in that file. Outside a git repository, say that failed fixes can only be undone by hand and ask before continuing.
 2. **Find the test command**: look at `package.json` scripts (`test`), `Cargo.toml` (`cargo test`), `pyproject.toml` / `pytest.ini` / `tests/` (`pytest`), `go.mod` (`go test ./...`), a `Makefile` or `justfile` `test` target, or the project's CLAUDE.md / README. If none is clear, ask the user for it.
 3. **Baseline**: run the tests once before changing anything. If they already fail, stop and report it: a red baseline makes every later result meaningless. If the project has no tests, say so and ask whether to continue with a type check or build as the only safety net, or to stop.
+4. **Coverage of what you'll touch**: tests only protect the behavior they exercise, so "tests pass" means "no tested behavior changed". For each file the plan will change, check whether any test reaches it: a test file that imports or names the module, or a coverage report if the project already produces one (don't install coverage tooling). List the files no test reaches. In the plan, mark fixes that change only unprotected code as **unprotected**, and for each say what a reviewer should check by hand. If most of the plan is unprotected, say so plainly and ask before continuing.
+5. **Commit mode**: ask once whether to leave all changes uncommitted (the default) or commit each applied fix separately. One commit per fix makes the run easy to review, revert one fix at a time, and bisect if something breaks later.
 
 ### 3. Plan
 
 Order the findings with the same priority **red-flags** uses: syndrome clusters and root causes first (one root-cause fix often resolves several flags), then boundary issues, then structural, then naming and comments. For each, state in one line: the change, the files it touches, and whether it changes a **public interface** (an exported function, type, CLI flag, HTTP route, or anything another package or user calls).
 
-Show the plan and wait for the user to confirm or trim it.
+Show the plan, with unprotected fixes marked, and wait for the user to confirm or trim it.
 
 ### 4. Apply, one fix at a time
 
@@ -48,8 +50,9 @@ For each fix in order:
 1. **Ask first if it changes a public interface**, naming the callers that will change. Skip it if the user says no.
 2. **Make the smallest change that removes the cause**, not the symptom. Move knowledge to its owner, delete the pass-through, push the complexity down, as the finding's lens says. Update every caller in the repo in the same fix. Don't reformat, rename or tidy anything the finding doesn't name.
 3. **Run the tests.**
-   - **Pass**: record the fix as applied and continue.
+   - **Pass**: record the fix as applied. In commit mode, commit just this fix's files (`git add <files>`, then `git commit`) with a message that names the flag it resolves, e.g. `Remove pass-through UserService.find_by_email (red-flags #2)`. Continue.
    - **Fail**: revert only the files this fix touched (`git checkout -- <files>`), record why it failed, and decide: if later fixes don't depend on this one, continue with them; if they do, stop and report.
+   - **Flaky?** If the failure is in a test that has nothing to do with the files you changed, run the tests once more before reverting. If the second run passes, say the test looks flaky and keep the fix; if it fails again, revert as above.
 4. Never stack a second fix on top of an unverified one.
 
 ### 5. Report
@@ -59,9 +62,10 @@ End with a short summary:
 - **Applied**: each fix, one line, with the files changed
 - **Reverted**: each fix that broke tests, with the failing test and the likely reason
 - **Skipped**: fixes the user declined or that depended on a reverted one
-- `git diff --stat` for the whole run
+- **Unprotected**: applied fixes that no test reaches, with what to check by hand
+- `git diff --stat` for the whole run (in commit mode, `git log --oneline` for the new commits instead)
 
-Don't commit. Leave the changes for the user to review, unless they asked you to commit; then commit each applied fix separately with a message naming the flag it resolves.
+Without commit mode, don't commit: leave the changes for the user to review.
 
 ## Boundaries
 

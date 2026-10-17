@@ -179,7 +179,7 @@ This is an instruction, not a hook: the agent follows it most of the time but ca
 | `red-flags` | 18-flag design smell scan covering structure, boundaries (including adapters that re-implement the core's vocabulary), documentation, naming, and process. Separates real problems from documented trade-offs, has a reading strategy for large multi-package targets, and ships Python, TypeScript, Rust and Go guides |
 | `design-review` | Structured review funnel from complexity triage through structural, interface, and surface checks |
 | `diagnose` | Routes a vague symptom or complaint to the most relevant skill via a decision tree |
-| `apply-fixes` | Applies a report's findings one fix at a time, running the tests after each and reverting any fix that breaks them; asks before changing a public interface |
+| `apply-fixes` | Applies a report's findings one fix at a time, running the tests after each and reverting any fix that breaks them; flags fixes no test covers, asks before changing a public interface, and can commit each fix separately |
 
 ## Attribution
 
