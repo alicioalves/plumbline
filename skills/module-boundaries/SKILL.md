@@ -1,6 +1,6 @@
 ---
 name: module-boundaries
-description: "Evaluates where module boundaries are drawn and whether modules should be merged or split. Use when deciding whether to combine or separate two modules, when modules are tightly coupled, or when a change to one forces changes to another. Not for depth within a single module (use deep-modules) or abstraction-layer quality (use abstraction-quality)."
+description: "Use when deciding whether to merge or split modules or classes (\"should these three classes be one?\", \"this file does two things, split it?\"), when two modules are always edited together, or a teammate proposes a split or merge and the user wants a second opinion. Evaluates where boundaries are drawn by asking which knowledge each side owns. Not for depth within a single module (use deep-modules) or abstraction-layer quality (use abstraction-quality)."
 argument-hint: "[file or module path]"
 allowed-tools: Read, Grep
 ---

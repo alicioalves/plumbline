@@ -1,6 +1,6 @@
 ---
 name: code-evolution
-description: "Evaluates whether changes to existing code maintain or degrade design quality. Use when the user asks to review a diff or PR (for example before merging it), or asks about recently modified files, to judge whether each change looks designed-in or bolted-on. Not for scanning design smells (use red-flags) or assessing overall design investment (use strategic-mindset)."
+description: "Use when the user asks for a PR or diff review (\"PR review please\", \"anything to change before this goes in?\", \"can you look at this diff?\"), or about recently changed files, to judge whether each change is designed-in or bolted-on: special cases, flags and copies added instead of extending the design. Reads the change with git when it can. Not for a design-smell scan of code that isn't a change (use red-flags) or the overall investment balance of a codebase (use strategic-mindset)."
 argument-hint: "[file, module, or PR]"
 allowed-tools: Read, Grep, Bash(git log:*), Bash(git diff:*), Bash(git show:*)
 ---
