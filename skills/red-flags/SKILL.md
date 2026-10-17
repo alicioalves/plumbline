@@ -1,8 +1,8 @@
 ---
 name: red-flags
-description: "Scans code against 17 design smells (the book's 14 named Red Flags plus 3 process-stage signals) and produces a structured diagnostic report. Use when the user asks for a red flags or design smell scan, asks to check code against a checklist, is evaluating unfamiliar code, or asks open-endedly whether anything is off in a named or pasted file, class, or function, or asks you to look it over. Not for a specific bug, error, or failing test the user has already identified. Not for a plain diff or PR review before merge, or whether a PR maintains design trajectory (use code-evolution for both), or diagnosing why code feels complex (use complexity-recognition)."
+description: "Scans code against 18 design smells (the book's 14 named Red Flags plus 4 additional signals) and produces a structured diagnostic report. Use when the user asks for a red flags or design smell scan, asks to check code against a checklist, is evaluating unfamiliar code, or asks open-endedly whether anything is off in a named or pasted file, class, or function, or asks you to look it over. Not for a specific bug, error, or failing test the user has already identified. Not for a plain diff or PR review before merge, or whether a PR maintains design trajectory (use code-evolution for both), or diagnosing why code feels complex (use complexity-recognition)."
 argument-hint: "[file or directory]"
-allowed-tools: Read, Grep
+allowed-tools: Read, Grep, Bash(git log:*), Bash(git diff:*), Bash(git show:*)
 ---
 
 # Red Flags Diagnostic
@@ -71,7 +71,7 @@ Structure follows execution order, not knowledge ownership.
   - Module named after a step in a process (Reader, Processor, Writer sharing format knowledge)
   - Decomposition by execution order rather than by knowledge
 
-### Boundary (4)
+### Boundary (5)
 
 #### 5. Information Leakage
 
@@ -84,6 +84,7 @@ When a design decision leaks across module boundaries, changing that decision of
   - Serialization/deserialization logic split across boundaries
   - Two modules changing in lockstep with no visible API dependency
   - Comments saying "don't forget to also update X"
+  - In a git repo: files that keep appearing in the same commits with no API dependency between them (see the Git Co-Change Test in **information-hiding**)
 
 #### 6. Overexposure
 
@@ -113,6 +114,7 @@ Same logic appears in multiple places. The next change of this type will require
   - Copy-pasted code with minor modifications
   - All callers wrapping the same call in identical try-catch blocks
   - Same constant or logic duplicated across many files
+  - In a git repo: the same handful of files edited together commit after commit for one kind of change
 
 #### 8. Special-General Mixture
 
@@ -126,6 +128,21 @@ General mechanism contains knowledge specific to one use case.
   - Method name encoding a use case (e.g., `formatForEmailDisplay`)
   - Method designed for exactly one use case when a general-purpose method could replace several
   - "Utility" module that knows details of its callers
+
+#### 18. Vocabulary Not Owned
+
+Several adapters (language bindings, SDKs, API clients, CLI commands, request handlers) each re-implement names, codes, parsing or defaults that belong to the module they adapt. Each adapter is "just translation", but together they hold the core's vocabulary in N copies, so adding a value means editing every adapter.
+
+- **Check:** → **information-hiding**, **deep-modules**
+  - Would adding one format, status, error variant or option require editing every adapter?
+- **Signals:**
+  - Parallel string→enum tables (`"jpeg" | "jpg" => Jpeg`) in each binding or client
+  - The same error-code or exit-code mapping repeated per adapter
+  - Field-by-field option merging (`if let Some(x) = opts.x { core.x = x }`) copied into every adapter
+  - The same string-literal union or constant list re-declared in several packages
+  - Comments like "same convention as the Node binding" or "keep in sync with X"
+
+The fix belongs in the owning module: expose the vocabulary once (parse/format a name, an error's code, a partial-options merge) so each adapter shrinks to type conversion. Numbered 18 because flags are identifiers, not an ordering; it sits with the other boundary flags.
 
 ### Documentation (2)
 
@@ -238,11 +255,22 @@ Error handling that suppresses or discards errors without meaningful action.
 
 _Hard to Pick Name_, _Hard to Describe_, _Non-obvious Code_ and _No Alternatives Considered_ surface during writing, before code review. Catch them early and the structural flags never materialize.
 
+## Reading Strategy
+
+For a target over about 1,000 lines or spanning several packages, don't read it top to bottom. Reading everything burns context before the scan starts and buries boundaries under implementation detail.
+
+1. **Entry points and public API first**: `lib.rs`, `index.ts`, `__init__.py`, package exports, the functions other packages call.
+2. **Boundaries next**: adapters, bindings, clients, serialization, anything that translates between two modules. Most Boundary flags live here.
+3. **Implementations only where a signal points**: open a function body when a flag's check needs it, not to be thorough.
+4. **Skip** tests, generated code, vendored dependencies and build output unless the question is about them.
+5. **Grep across packages** for the same string literals, enum names or `match`/`switch` arms. Parallel tables in different packages are the fastest way to find Repetition and Vocabulary Not Owned.
+
 ## Review Process
 
-1. **Identify scope**: file, module, PR diff, or class
-2. **Scan all flags**: For each: CLEAR, TRIGGERED, or N/A. If triggered: location, principle violated, candidate fix
-3. **Structure a report**: Group findings by category (Structural, Boundary, Documentation, Naming/Abstraction, Process). Summarize flags triggered, critical issues and recommended actions.
+1. **Identify scope**: file, module, PR diff, or class. If the code is Python or TypeScript, read [references/python.md](references/python.md) or [references/typescript.md](references/typescript.md) first: they list the idiomatic shapes each flag takes in that language. For a large or multi-package target, follow the Reading Strategy above.
+2. **Scan all flags**: For each: CLEAR, TRIGGERED, ACCEPTED, or N/A. If triggered: location, principle violated, candidate fix.
+   - **ACCEPTED** means the signal is present but the code or its docs give an explicit rationale for the trade-off (a comment, an ADR, a design doc), and that rationale still holds. Never infer a rationale the code doesn't state. List accepted flags in one line each and leave them out of the summary and prioritization. If the stated rationale no longer holds, the flag is TRIGGERED.
+3. **Structure a report**: Group findings by category (Structural, Boundary, Documentation, Naming/Abstraction, Process). Summarize flags triggered, critical issues and recommended actions. Put accepted trade-offs in a short separate list at the end.
 4. **Follow the arrows**: For each triggered flag, pull in the indicated lens for deeper analysis
 5. **Check for syndromes**: Multiple triggered flags may share a root cause. See `references/flag-interaction-map.md` for named clusters. A syndrome points at an architectural issue. Fixing the root cause resolves all flags in the cluster.
 6. **Prioritize**: Boundary flags compound over time and infect adjacent code, so fix those first. Canary flags are the cheapest to act on. Structural flags require refactoring but affect a bounded area.

@@ -2,7 +2,7 @@
 name: information-hiding
 description: "Checks for information leakage across module boundaries, including temporal decomposition and false encapsulation. Use when modules change together, implementation details leak across boundaries, or structure follows execution order rather than knowledge ownership. Not for merge/split decisions (use module-boundaries) or interfaces over-specialized for one caller (use general-vs-special)."
 argument-hint: "[file or module path]"
-allowed-tools: Read, Grep
+allowed-tools: Read, Grep, Bash(git log:*), Bash(git diff:*), Bash(git show:*)
 ---
 
 # Information Hiding Review Lens

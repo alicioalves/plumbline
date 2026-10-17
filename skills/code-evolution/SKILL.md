@@ -2,7 +2,7 @@
 name: code-evolution
 description: "Evaluates whether changes to existing code maintain or degrade design quality. Use when the user asks to review a diff or PR (for example before merging it), or asks about recently modified files, to judge whether each change looks designed-in or bolted-on. Not for scanning design smells (use red-flags) or assessing overall design investment (use strategic-mindset)."
 argument-hint: "[file, module, or PR]"
-allowed-tools: Read, Grep
+allowed-tools: Read, Grep, Bash(git log:*), Bash(git diff:*), Bash(git show:*)
 ---
 
 # Code Evolution Review Lens
@@ -91,6 +91,7 @@ Five maintenance rules:
 
 ## Review Process
 
+0. **Get the change**: if the target is a branch or PR in a git repository, read it with `git diff <base>...HEAD` (usually `main...HEAD`) and `git log --oneline <base>..HEAD` for the commit story, then open full files with `git show HEAD:<path>` only where the diff lacks context. Outside a git repo, review the diff or files you were given.
 1. **Apply the "designed this way" test**: Does the modification look native or bolted-on?
 2. **Check for incremental complexity**: Did the change add special cases, dependencies, parameters, or flags?
 3. **Run repetition audit**: Did the change introduce or perpetuate duplication?

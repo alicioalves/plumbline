@@ -2,7 +2,7 @@
 name: design-review
 description: "Orchestrates a structured design review, running the other skills as a diagnostic funnel from complexity triage to a full red-flags sweep. Use when the user asks for a comprehensive or prioritized design assessment of a file, module, or PR. Not for an open-ended \"anything off here?\" or \"take a look at this\" prompt that names no review goal (use red-flags), a plain diff review before merge or analyzing how code changed over time (use code-evolution), or applying one specific lens (use that skill directly)."
 argument-hint: "[file, module, or PR to review]"
-allowed-tools: Read, Grep
+allowed-tools: Read, Grep, Bash(git log:*), Bash(git diff:*), Bash(git show:*)
 ---
 
 # Design Review Orchestrator
@@ -51,7 +51,7 @@ Apply these lenses to naming and documentation:
 
 ### Phase 5: Red Flags Sweep
 
-Run the full **red-flags** 17-flag checklist against the target. Any flag triggered in Phases 1-4 will already be marked. This phase catches flags that earlier phases may not have surfaced (especially Process flags 15-17: No Alternatives Considered, Tactical Momentum, Catch-and-Ignore).
+Run the full **red-flags** 18-flag checklist against the target. Any flag triggered in Phases 1-4 will already be marked. This phase catches flags that earlier phases may not have surfaced (especially Process flags 15-17: No Alternatives Considered, Tactical Momentum, Catch-and-Ignore).
 
 ## Early Termination
 
@@ -68,6 +68,8 @@ Rank findings in this order:
 5. **Surface issues**: Naming and documentation problems. Important but lowest cost to fix and lowest risk if deferred.
 
 ## Reviewing at Scale
+
+For any target too large to read whole, use the Reading Strategy in **red-flags** (public API, then boundaries, then only the implementations a signal points at) in every phase, not only Phase 5.
 
 The funnel above is written for one target reviewed in-conversation. When the target is an entire codebase, a large PR spanning many files, or the user asks for a "thorough" or "comprehensive" review, running it once per file in a single conversation burns context fast and serializes work that has no reason to be serial.
 
