@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- **Design check for other agents.** README snippet for `AGENTS.md` (and equivalents) that gives Codex, Cursor, Grok Build and other agents the review-on-stop behavior as an instruction, with the trade-off against the Claude Code hook spelled out.
+
 ## 1.6.0
 
 ### Added
