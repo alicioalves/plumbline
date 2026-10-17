@@ -42,25 +42,30 @@ The code for each case is inlined in its prompt. The prompts don't hint at the s
 
 ## Baseline
 
-This is v1.3.0, full run of 2026-09-19 at commit `ad561ff` (10 cases × 3 runs × 2 arms, Opus agent, Sonnet judge, `-j 4`; 18 minutes, $20.89).
+This is v1.4.0, full run of 2026-10-17 on branch `feat/v1.4-boundaries` (11 cases × 3 runs × 2 arms, Opus agent, Sonnet judge, `-j 4`; 15 minutes, $19.60).
 
 | Case | With | Without | Δ | Skill fired (with) |
 |---|---|---|---|---|
 | 01-scan-orders | 1.00 | 0.79 | +0.21 | 3/3 |
 | 02-inherited-billing | 1.00 | 0.93 | +0.07 | 3/3 |
-| 03-diff-review | 0.93 | 0.79 | +0.14 | 3/3 |
-| 04-pasted-ts | 1.00 | 0.79 | +0.21 | 3/3 |
-| 05-checklist-cache | 1.00 | 0.70 | +0.30 | 3/3 |
+| 03-diff-review | 1.00 | 0.57 | +0.43 | 3/3 |
+| 04-pasted-ts | 1.00 | 0.71 | +0.29 | 3/3 |
+| 05-checklist-cache | 1.00 | 0.73 | +0.27 | 3/3 |
 | 06-neg-keyerror | 1.00 | 1.00 | 0.00 | 0/3 (correct) |
-| 07-units-leak | 1.00 | 1.00 | 0.00 | 3/3 |
-| 08-buried-passthrough | 0.91 | 0.12 | **+0.79** | 3/3 |
-| 09-layered-function | 1.00 | 0.64 | +0.36 | 3/3 |
-| 10-caller-retries | 0.97 | 0.91 | +0.06 | 3/3 |
-| **Mean** | | | **+0.22** | |
+| 07-units-leak | 1.00 | 0.73 | +0.27 | 3/3 |
+| 08-buried-passthrough | 1.00 | 0.12 | **+0.88** | 3/3 |
+| 09-layered-function | 1.00 | 0.51 | +0.49 | 3/3 |
+| 10-caller-retries | 1.00 | 1.00 | 0.00 | **2/3** |
+| 11-rust-bindings | 1.00 | 0.84 | +0.16 | 3/3 |
+| **Mean** | | | **+0.28** | |
 
-Every should-fire case now fires 3/3, and the negative case still fires nothing. Two earlier baselines for comparison: mean Δ +0.13 at `55e986a` (before #10), +0.20 at `97dedce` (after #10, before #9).
+The with-plugin arm scores 1.00 on every case, up from 0.93 / 0.91 / 0.97 on 03, 08 and 10 in the v1.3.0 baseline. Earlier baselines for comparison: mean Δ +0.22 at v1.3.0 (`ad561ff`, 10 cases), +0.20 and +0.13 before that.
 
-How to read it:
+- **11-rust-bindings** was also run on v1.3.1 before the 1.4.0 changes: with 1.00, without 0.84, Δ +0.16, identical to 1.4.0. At this size (about 180 lines inline) the old skill already finds the vocabulary leak, so the case guards against regressions rather than measuring the new features. The 1.4.0 changes (reading strategy, git co-change, Python/TypeScript guides) matter on real multi-package repos, which inline-code cases can't reproduce; they were checked by hand on the 2,800-line workspace this case was condensed from.
+- **10-caller-retries** fired 2/3 (3/3 in v1.3.0) and still scored 1.00. The only description change in 1.4.0 is the flag count, so this is most likely run-to-run noise; watch it on the next run.
+- The Δ on 10 is 0.00 because its without-arm hit 1.00 this run, not because the plugin regressed. As before, most Δ movement is the no-plugin arm bouncing.
+
+Notes from the v1.3.0 run (numbers refer to that run):
 
 - **Where the uplift comes from.** Plain Opus catches most of the individual planted smells. The gap is mostly `root-cause`: with the plugin, the answer ties its findings to a shared design cause far more often.
 - **08 is where #9 paid off.** "Anything off in this user service?" went from 0/3 fired and Δ +0.18 to 3/3 and Δ **+0.79**, the largest in the suite. Without the plugin both arms used to go bug-hunting and miss the planted pass-throughs; now only the no-plugin arm does (0.12).
