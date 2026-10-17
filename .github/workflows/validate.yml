@@ -12,6 +12,8 @@ on:
       - "gemini-extension.json"
       - "package.json"
       - "scripts/**"
+      - "hooks/**"
+      - "tests/**"
       - ".github/workflows/validate.yml"
   pull_request:
     paths:
@@ -23,6 +25,8 @@ on:
       - "gemini-extension.json"
       - "package.json"
       - "scripts/**"
+      - "hooks/**"
+      - "tests/**"
       - ".github/workflows/validate.yml"
 
 jobs:
@@ -44,3 +48,6 @@ jobs:
 
       - name: Check version sync across manifests
         run: scripts/bump-version.sh --check
+
+      - name: Hook tests
+        run: node --test "tests/**/*.test.mjs"

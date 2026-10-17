@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.5.0
+
+### Added
+
+- **`apply-fixes` skill.** Applies the findings of a red-flags or design-review report one fix at a time: checks for a clean tree, finds the test command, runs a baseline, shows a plan, asks before changing a public interface, runs the tests after every fix and reverts only the fix that broke them. Ends with applied / reverted / skipped and `git diff --stat`; never commits unless asked. `red-flags`, `design-review` and `diagnose` point to it.
+- **Review on stop (opt-in hook).** With the `review_on_stop` option on, a turn that writes 80+ lines of code (`review_threshold_lines`) or creates a code file ends with one `red-flags` check of those files, reporting only what triggered. Off by default; Claude Code only. Dependency-free Node scripts in `hooks/`, tested with `node:test` (`npm test`) in CI.
+
 ## 1.4.0
 
 ### Added

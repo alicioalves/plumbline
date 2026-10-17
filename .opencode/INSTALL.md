@@ -17,7 +17,7 @@ Add Plumbline to the `plugin` array in your `opencode.json` (global
 ```
 
 Restart OpenCode. The plugin installs through OpenCode's plugin manager and
-registers all 16 skills with OpenCode's native `skill` tool — no symlinks or
+registers all 17 skills with OpenCode's native `skill` tool — no symlinks or
 manual skill paths required.
 
 Verify by asking: "use skill tool to list skills"

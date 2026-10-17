@@ -1,6 +1,6 @@
 # Installing Plumbline for Codex (App + CLI)
 
-Codex supports installing Plumbline as a plugin from a marketplace source. This registers the plugin identity (name, description, icon) in addition to all 16 skills, and lets you track updates with `codex plugin marketplace upgrade` instead of manual `git pull`.
+Codex supports installing Plumbline as a plugin from a marketplace source. This registers the plugin identity (name, description, icon) in addition to all 17 skills, and lets you track updates with `codex plugin marketplace upgrade` instead of manual `git pull`.
 
 The Codex App and Codex CLI share the same `~/.codex/config.toml`, so installing once from the CLI makes Plumbline visible and toggleable in the App's Plugins panel too — there's currently no App-only way to add a third-party marketplace, so the CLI step below is required either way.
 
@@ -52,7 +52,7 @@ codex plugin marketplace remove plumbline
 
 ## Fallback: manual symlink (Codex CLI < 0.142.0, or skills-only)
 
-If you're on an older Codex CLI, or you only want the 16 `SKILL.md` files without the plugin wrapper, clone the repo and link the skills directory into Codex's native skill-scan path:
+If you're on an older Codex CLI, or you only want the 17 `SKILL.md` files without the plugin wrapper, clone the repo and link the skills directory into Codex's native skill-scan path:
 
 ```bash
 git clone https://github.com/tomymaritano/plumbline.git ~/.codex/plumbline

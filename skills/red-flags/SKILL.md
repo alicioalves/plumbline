@@ -274,4 +274,4 @@ For a target over about 1,000 lines or spanning several packages, don't read it 
 4. **Follow the arrows**: For each triggered flag, pull in the indicated lens for deeper analysis
 5. **Check for syndromes**: Multiple triggered flags may share a root cause. See `references/flag-interaction-map.md` for named clusters. A syndrome points at an architectural issue. Fixing the root cause resolves all flags in the cluster.
 6. **Prioritize**: Boundary flags compound over time and infect adjacent code, so fix those first. Canary flags are the cheapest to act on. Structural flags require refactoring but affect a bounded area.
-7. **Recommend**: Create a report with prioritized, actionable fixes tied to specific principles.
+7. **Recommend**: Create a report with prioritized, actionable fixes tied to specific principles. Don't apply them unprompted; if the user wants them applied, **apply-fixes** does it one fix at a time with the tests run after each.

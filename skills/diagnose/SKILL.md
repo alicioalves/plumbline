@@ -65,6 +65,12 @@ Technical debt from tactical shortcuts. The concern is process, not a specific s
 → **strategic-mindset**: Assess the tactical-vs-strategic balance.
 → Then **code-evolution**: Plan incremental improvement alongside current work.
 
+### 9. "I know what's wrong, just fix it"
+
+A review already named the problems (a red-flags or design-review report in the conversation, or findings the user lists) and the user wants the code changed.
+
+→ **apply-fixes**: Apply the findings one at a time, with the tests run after each.
+
 ## Multiple Symptoms
 
 When the description maps to more than one root symptom, prioritize in this order:

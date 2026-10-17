@@ -6,6 +6,7 @@ Guidance for AI coding agents working in this repository. For what Plumbline is 
 
 - `skills/<name>/SKILL.md`: the skills themselves, each with YAML frontmatter (`name`, `description`) and optional `references/` files. This is the product.
 - `agents/`: subagent definitions used by skills (e.g. `clean-room-alternative.md` for `design-it-twice`).
+- `hooks/`: the opt-in review-on-stop hook (`hooks.json`, Node scripts with no dependencies). Tests live in `tests/hooks/` and run with `npm test`.
 - `evals/<skill>/`: `claude plugin eval` suites. Each suite's README explains how to run it and what its graders score.
 - Platform manifests: `.claude-plugin/`, `.codex-plugin/`, `.cursor-plugin/`, `.kimi-plugin/`, `.grok-plugin/`, `.agents/`, `.codex/`, `.gemini/`, `.opencode/`, `gemini-extension.json`, `plugin.json`, `package.json`.
 
@@ -24,6 +25,7 @@ Run before committing:
 scripts/check-skills.sh          # skill and agent frontmatter consistency
 scripts/bump-version.sh --check  # every manifest carries the same version
 claude plugin validate . --strict
+npm test                         # hook tests (node:test)
 ```
 
 ## Conventions
