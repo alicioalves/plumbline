@@ -1,0 +1,23 @@
+# Plumbline reviewing its own pull requests with the reusable workflow.
+# Does nothing (and stays green) until the repo has an ANTHROPIC_API_KEY secret.
+name: Design review
+
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review]
+    paths:
+      - "skills/**"
+      - "agents/**"
+      - "hooks/**"
+      - "scripts/**"
+      - ".github/workflows/plumbline-review.yml"
+
+jobs:
+  design:
+    if: github.event.pull_request.draft == false
+    permissions:
+      contents: read
+      pull-requests: write
+    uses: ./.github/workflows/plumbline-review.yml
+    secrets:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
