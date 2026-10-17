@@ -143,6 +143,10 @@ Reviews can remember what they found. Say yes when `red-flags` offers to save it
 
 From then on, each review leads with what changed (new findings, and fixed ones that came back), keeps still-open ones to a line, and stops re-reporting trade-offs you accepted. `apply-fixes` marks what it fixes, and `code-evolution` flags a PR that reintroduces a fixed problem.
 
+## Design review on pull requests
+
+A reusable GitHub Actions workflow runs `code-evolution` on each pull request and comments only when the change adds a boundary problem or a shared root cause, or brings back a fixed finding. It's read-only, skips PRs from forks, and treats PR content as data. Setup, cost and the safety model: [docs/ci-review.md](docs/ci-review.md).
+
 ## What's Inside
 
 ### Structure & Modules
