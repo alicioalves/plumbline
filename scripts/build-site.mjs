@@ -5,7 +5,7 @@
 import { cpSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
-const ROOT = new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+const ROOT = new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"); // Windows drive paths
 const OUT = join(ROOT, "_site");
 const REPO = "https://github.com/tomymaritano/plumbline";
 
@@ -27,8 +27,8 @@ const listed = new Set(groups.flatMap((g) => g.skills.map((s) => s.name)));
 const missing = skillDirs.filter((d) => !listed.has(d));
 if (missing.length) throw new Error(`skills missing from README "What's Inside": ${missing.join(", ")}`);
 
-const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-const inline = (s) => esc(s).replace(/`([^`]+)`/g, "<code>$1</code>");
+const esc = (s) => s.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+const inline = (s) => esc(s).replaceAll(/`([^`]+)`/g, "<code>$1</code>");
 
 rmSync(OUT, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true });
