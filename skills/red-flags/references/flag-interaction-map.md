@@ -12,6 +12,12 @@ _Temporal Decomposition_ + _Information Leakage_ + _Repetition_
 
 Modules are organized around steps in a process instead of the knowledge they own. A Reader, Processor and Writer each encode the data format, duplicating the same knowledge in three places. Look for modules named after process steps that share format constants, parsing logic or serialization code. Reorganize so one module owns the format and others interact through an interface that hides it.
 
+### The Adapter Echo
+
+_Vocabulary Not Owned_ + _Repetition_ + _Information Leakage_
+
+A core module is wrapped by several adapters (language bindings, SDKs, clients) that each re-implement its vocabulary: the names of its values, its error codes, how partial options merge into defaults. Every adapter is "only translation", so none of them looks wrong alone, but adding one value means editing all of them, and nothing fails at compile time when one is missed. Look for parallel string→enum tables, error-code mappings and option-merge code that match line for line across packages, often with a comment saying "same convention as X". Move the vocabulary into the core (parse and name a value, give each error a code, merge partial options) so each adapter shrinks to type conversion.
+
 ### The Shallow Wrapper Stack
 
 _Shallow Module_ + _Pass-Through Method_ + _Conjoined Methods_

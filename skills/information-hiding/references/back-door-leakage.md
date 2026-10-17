@@ -52,6 +52,14 @@ Could a developer unfamiliar with the codebase modify module A without knowing m
 
 Two files that repeatedly appear in the same commit but have no direct API dependency are likely coupled through shared knowledge. Git history makes invisible dependencies visible after the fact.
 
+In a git repository, list recent commits with the files each one touched:
+
+```bash
+git log --name-only --format=%h -n 200 -- <paths>
+```
+
+Read the output for pairs (or groups) of files that keep showing up under the same commit hash. Then check whether either file imports or calls the other. Frequent co-change with no API dependency is the signature of back-door leakage. A shared generated file, lockfile or changelog doesn't count. If the history is short (roughly fewer than 20 commits touching these paths), treat the test as inconclusive and say so: absence of co-change in a young repo is not evidence of good boundaries, so base the finding on the code instead. Outside a git repository, skip this test without mentioning it.
+
 ## The Wrong Fix
 
 Adding comments like "keep in sync with module B" documents the leakage without eliminating it. The dependency is still invisible to the compiler and will eventually drift.
