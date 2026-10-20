@@ -3,6 +3,8 @@
 
 <h1 align="center">Plumbline</h1>
 
+**Docs: [tomymaritano.github.io/plumbline](https://tomymaritano.github.io/plumbline/)**
+
 AI agents can write working code, but they don't stop to consider effective design unless asked. Plumbline is a set of skills inspired by John Ousterhout's [*A Philosophy of Software Design*](https://web.stanford.edu/~ouster/cgi-bin/aposd.php). Like a builder's plumb line, each skill gives your agent a simple, concrete test for whether the design is still standing straight, during implementation and review.
 
 ## How It Works
@@ -13,7 +15,7 @@ Skills activate automatically and push your agent to ask questions like:
 - *Can this method be understood without reading another one in a different file?*
 - *Is error handling pushing work onto callers that the module could handle itself?*
 
-You can also invoke them directly. Use `/plumbline:red-flags` to trigger a design smell scan, `/plumbline:deep-modules` to check interface depth and `/plumbline:design-it-twice` to compare alternatives before committing. (On platforms that install the skills without the plugin namespace, such as skills.sh, drop the `plumbline:` prefix.)
+You can also invoke them directly. Use `/plumbline:red-flags` to trigger a design smell scan, `/plumbline:apply-fixes` to apply its findings with the tests as a safety net, `/plumbline:deep-modules` to check interface depth and `/plumbline:design-it-twice` to compare alternatives before committing. (On platforms that install the skills without the plugin namespace, such as skills.sh, drop the `plumbline:` prefix.)
 
 When those skills are applied and the agent opens a pull request (or edits the body of one it opened), it signs the PR with the skills whose checks actually ran:
 
@@ -51,7 +53,7 @@ codex plugin marketplace add tomymaritano/plumbline
 codex plugin add plumbline@plumbline
 ```
 
-Older Codex versions only get the 16 skills, via a manual symlink — see [.codex/INSTALL.md](.codex/INSTALL.md) for that fallback and full troubleshooting.
+Older Codex versions only get the 17 skills, via a manual symlink — see [.codex/INSTALL.md](.codex/INSTALL.md) for that fallback and full troubleshooting.
 
 ### Cursor
 
@@ -61,7 +63,7 @@ Cursor doesn't yet have a one-line "install from a GitHub URL" flow for unlisted
 git clone https://github.com/tomymaritano/plumbline.git ~/.cursor/plugins/local/plumbline
 ```
 
-Then check the **Customize** panel in the sidebar to confirm Plumbline and its 16 skills are listed.
+Then check the **Customize** panel in the sidebar to confirm Plumbline and its 17 skills are listed.
 
 ### OpenCode
 
@@ -97,7 +99,7 @@ grok plugin marketplace add tomymaritano/plumbline
 grok plugin install plumbline
 ```
 
-Or install straight from the repo with `grok plugin install tomymaritano/plumbline`. Add `--trust` to skip the confirmation prompt, then run `/plugin` to check that Plumbline and its 16 skills are listed.
+Or install straight from the repo with `grok plugin install tomymaritano/plumbline`. Add `--trust` to skip the confirmation prompt, then run `/plugin` to check that Plumbline and its 17 skills are listed.
 
 ### GitHub Copilot CLI
 
@@ -123,6 +125,37 @@ pi install git:github.com/tomymaritano/plumbline
 ```
 
 Pi auto-discovers the `skills/` directory with no extra config.
+
+## Review on stop (opt-in)
+
+Plumbline can check the code your agent writes, not only the code you ask it to review. When it's on and a turn writes a lot of code (80+ lines by default) or creates a new code file, Plumbline asks Claude once, before it finishes, to run `red-flags` on those files and report only what triggered. Small edits, docs and config files never trigger it, and it never applies fixes on its own.
+
+It's off by default. In Claude Code, turn it on from `/config` (the **Review on stop** row under Plumbline) or `/plugin` → Plumbline → configure, and adjust **Review threshold (lines)** there too.
+
+### Other agents
+
+The hook is a Claude Code feature. On Codex, Cursor, Grok Build, Copilot CLI and the rest, get the same behavior by adding this to your project's `AGENTS.md` (or `CLAUDE.md`, `GEMINI.md`, `.cursor/rules`, whichever your agent reads):
+
+```markdown
+## Design check
+
+After a change that adds or rewrites roughly 80+ lines of code, or creates a new
+source file, run the Plumbline `red-flags` skill on the files you changed before
+you finish. Report only the flags that triggered, in a few lines; if none did,
+say so in one line. Don't apply fixes unless I ask.
+```
+
+This is an instruction, not a hook: the agent follows it most of the time but can skip it, especially late in a long session. The Claude Code hook runs every time.
+
+## Remembering findings
+
+Reviews can remember what they found. Say yes when `red-flags` offers to save its findings and it writes `.plumbline/findings.md` in your project: one entry per problem, keyed by what the problem is rather than a line number, with its status (`open`, `fixed`, `accepted` with a reason) and dates. Commit it with your code so the team shares it.
+
+From then on, each review leads with what changed (new findings, and fixed ones that came back), keeps still-open ones to a line, and stops re-reporting trade-offs you accepted. `apply-fixes` marks what it fixes, and `code-evolution` flags a PR that reintroduces a fixed problem.
+
+## Design review on pull requests
+
+A reusable GitHub Actions workflow runs `code-evolution` on each pull request and comments only when the change adds a boundary problem or a shared root cause, or brings back a fixed finding. It's read-only, skips PRs from forks, and treats PR content as data. Setup, cost and the safety model: [docs/ci-review.md](docs/ci-review.md).
 
 ## What's Inside
 
@@ -163,9 +196,16 @@ Pi auto-discovers the `skills/` directory with no extra config.
 
 | Skill | Covers |
 | --- | --- |
-| `red-flags` | 18-flag design smell scan covering structure, boundaries (including adapters that re-implement the core's vocabulary), documentation, naming, and process. Separates real problems from documented trade-offs, has a reading strategy for large multi-package targets, and ships Python and TypeScript guides |
+| `red-flags` | 18-flag design smell scan covering structure, boundaries (including adapters that re-implement the core's vocabulary), documentation, naming, and process. Separates real problems from documented trade-offs, has a reading strategy for large multi-package targets, and ships Python, TypeScript, Rust and Go guides |
 | `design-review` | Structured review funnel from complexity triage through structural, interface, and surface checks |
 | `diagnose` | Routes a vague symptom or complaint to the most relevant skill via a decision tree |
+| `apply-fixes` | Applies a report's findings one fix at a time, running the tests after each and reverting any fix that breaks them; flags fixes no test covers, asks before changing a public interface, and can commit each fix separately |
+
+## Security and privacy
+
+- **No network calls, no credentials.** The skills are Markdown instructions. Plumbline sends nothing anywhere and needs no API key (the optional CI workflow uses your own `ANTHROPIC_API_KEY`, see [docs/ci-review.md](docs/ci-review.md)).
+- **Hooks are opt-in and local.** The review-on-stop hook is two dependency-free Node scripts in `hooks/`, matched only on `Edit|Write|MultiEdit` and `Stop`. They do nothing unless you turn the option on. When on, they record which code files a turn edited (path and line count) in Claude Code's plugin data folder, and delete it at the end of each turn. They read no file contents and run no shell commands.
+- **Skills that change code ask first.** `apply-fixes` is the only skill allowed to edit files; it asks before public-interface changes and never commits unless you choose commit mode. Review skills are read-only apart from `git log`/`diff`/`show` and the optional `.plumbline/findings.md` they offer to write.
 
 ## Attribution
 

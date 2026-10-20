@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plumbline skill</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <a class="back" href="./">← All skills</a>
+  <article id="doc"><p>Loading…</p></article>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js" integrity="sha384-/TQbtLCAerC3jgaim+N78RZSDYV7ryeoBCVqTuzRrFec2akfBkHS7ACQ3PQhvMVi" crossorigin="anonymous"></script>
+<script type="module">
+  // Renders skills/<name>/SKILL.md, the same file the plugin ships.
+  const params = new URLSearchParams(location.search);
+  const name = params.get("name") || "";
+  const file = params.get("file") || "SKILL.md";
+  const doc = document.getElementById("doc");
+
+  async function render() {
+    if (!/^[a-z-]+$/.test(name) || !/^(SKILL\.md|references\/[a-z0-9-]+\.md)$/.test(file)) {
+      doc.textContent = "Unknown skill.";
+      return;
+    }
+    const res = await fetch(`skills/${name}/${file}`);
+    if (!res.ok) throw new Error(String(res.status));
+    const md = await res.text();
+    const m = md.match(/^---\n([\s\S]*?)\n---\n/);
+    const body = m ? md.slice(m[0].length) : md;
+    const desc = m && (m[1].match(/^description:\s*"(.*)"$/m) || [])[1];
+    document.title = `${name}${file === "SKILL.md" ? "" : " · " + file.replace("references/", "")} · Plumbline`;
+    const html = marked.parse(body.replaceAll("$ARGUMENTS", "the target you give it"), { mangle: false, headerIds: false });
+    doc.innerHTML = (desc ? `<p class="frontmatter"></p>` : "") + html;
+    if (desc) doc.querySelector(".frontmatter").textContent = desc;
+    // Relative links (references/…) resolve against the skill's folder.
+    for (const a of doc.querySelectorAll("a[href]")) {
+      const h = a.getAttribute("href");
+      if (/^references\/[a-z0-9-]+\.md$/.test(h)) a.href = `skill.html?name=${name}&file=${h}`;
+      else if (!/^(https?:|#|\/)/.test(h)) a.href = `skills/${name}/${h}`;
+    }
+  }
+
+  try {
+    await render();
+  } catch {
+    doc.textContent = "Couldn't load this skill.";
+  }
+</script>
+</body>
+</html>

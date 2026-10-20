@@ -1,6 +1,6 @@
 ---
 name: information-hiding
-description: "Checks for information leakage across module boundaries, including temporal decomposition and false encapsulation. Use when modules change together, implementation details leak across boundaries, or structure follows execution order rather than knowledge ownership. Not for merge/split decisions (use module-boundaries) or interfaces over-specialized for one caller (use general-vs-special)."
+description: "Use when one change ripples through many files (\"adding one field means editing every file\", \"swapping Redis for Postgres should be one file but isn't\"), when the user is planning to change a format, protocol, storage backend or schema and asks what it will touch, or when modules share knowledge of a format or key scheme without an interface saying so. Checks for information leakage across module boundaries, temporal decomposition (code split by step instead of by knowledge) and false encapsulation. Not for merge/split decisions (use module-boundaries) or interfaces over-specialized for one caller (use general-vs-special)."
 argument-hint: "[file or module path]"
 allowed-tools: Read, Grep, Bash(git log:*), Bash(git diff:*), Bash(git show:*)
 ---

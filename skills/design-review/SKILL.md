@@ -67,6 +67,10 @@ Rank findings in this order:
 4. **Structural issues**: Shallow modules, pass-through methods, classitis. These require refactoring but affect a bounded area.
 5. **Surface issues**: Naming and documentation problems. Important but lowest cost to fix and lowest risk if deferred.
 
+If the project has `.plumbline/findings.md`, read it first and reconcile the review with it at the end, as **red-flags** describes in its findings-file reference: lead with new and regressed findings, then update the file.
+
+The review ends at the report. If the user wants the fixes applied, **apply-fixes** takes this ranking as its plan and applies one fix at a time, running the tests after each.
+
 ## Reviewing at Scale
 
 For any target too large to read whole, use the Reading Strategy in **red-flags** (public API, then boundaries, then only the implementations a signal points at) in every phase, not only Phase 5.

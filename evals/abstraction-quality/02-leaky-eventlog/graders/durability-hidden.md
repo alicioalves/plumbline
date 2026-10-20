@@ -1,0 +1,5 @@
+---
+type: llm
+focus: last_message
+---
+PASS if the answer identifies that `Append` returns success before the event is durable (`FileLog` buffers records and only flushes and fsyncs every 64 appends or on `Flush`/`Close`), that `Flush` is not part of the `Log` interface so code holding a `Log` cannot force durability, and that `PlaceOrder` therefore acknowledges orders that can be lost on a crash, AND frames it as an abstraction problem: the interface looks clean but omits a property callers depend on (durability or visibility semantics), so callers cannot safely forget what is underneath. Noting that `ReadFrom` and `LastOffset` disagree about unflushed events counts as supporting evidence. The fix must put that guarantee into the abstraction (e.g. `Append` durable on return, an explicit `Sync`/`Flush` or commit on the interface, or a documented, typed durability mode). FAIL if the buffering is missed, or is reported only as a local bug fixed by calling `Flush` in the handler with no point about what the `Log` interface promises.

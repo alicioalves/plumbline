@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "plumbline",
-  "version": "1.4.0",
+  "version": "1.8.0",
   "description": "A plumb line for AI coding — agent skills that check code against the philosophy of software design.",
   "author": {
     "name": "Tomás Maritano",
@@ -15,5 +15,21 @@
     "software-philosophy",
     "code-quality",
     "design-review"
-  ]
+  ],
+  "userConfig": {
+    "review_on_stop": {
+      "type": "boolean",
+      "title": "Review on stop",
+      "description": "When a turn writes a lot of code (or creates a code file), ask Claude once to run the red-flags skill on those files before it finishes. Off by default.",
+      "default": false
+    },
+    "review_threshold_lines": {
+      "type": "number",
+      "title": "Review threshold (lines)",
+      "description": "Lines of code written in one turn that trigger the review on stop.",
+      "default": 80,
+      "min": 10,
+      "max": 2000
+    }
+  }
 }

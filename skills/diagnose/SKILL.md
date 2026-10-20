@@ -1,6 +1,6 @@
 ---
 name: diagnose
-description: "Routes a vague symptom or complaint to the most relevant Plumbline skill via a decision tree. Use when someone describes a problem but doesn't know which skill to reach for. Not for a comprehensive review (use design-review) or a checklist scan (use red-flags)."
+description: "Use when the user describes a design symptom and says they don't know what kind of problem it is or which review to run (\"something about this is off but I can't tell what\", \"where do I even start with this?\"). Routes the symptom to the right Plumbline lens with a decision tree and says when there is no structural problem. When the symptom already points at one lens (a naming struggle, error-handling sprawl, a change that touches many files), use that lens directly. Not for a comprehensive review (use design-review) or a checklist scan (use red-flags)."
 argument-hint: "[description of the symptom or problem]"
 allowed-tools: Read, Grep
 ---
@@ -65,6 +65,12 @@ Technical debt from tactical shortcuts. The concern is process, not a specific s
 → **strategic-mindset**: Assess the tactical-vs-strategic balance.
 → Then **code-evolution**: Plan incremental improvement alongside current work.
 
+### 9. "I know what's wrong, just fix it"
+
+A review already named the problems (a red-flags or design-review report in the conversation, or findings the user lists) and the user wants the code changed.
+
+→ **apply-fixes**: Apply the findings one at a time, with the tests run after each.
+
 ## Multiple Symptoms
 
 When the description maps to more than one root symptom, prioritize in this order:
@@ -75,9 +81,13 @@ When the description maps to more than one root symptom, prioritize in this orde
 
 Route to the highest-priority match first. Mention the secondary matches so the user can follow up.
 
+## When There Is No Problem
+
+A vague complaint doesn't mean the code is wrong. Before routing, read the code. If it shows none of the symptoms in the tree (changes stay local, names fit, errors are handled where they belong, interfaces are simple), lead with that verdict: the design is sound. Then, if useful, say what the unease probably is instead (unfamiliar domain, a hard problem, a style preference) and offer at most one optional improvement, labeled as optional. Don't go looking for "what's bugging you" until you find something to restructure.
+
 ## Fallback
 
-If the described symptom does not match any branch above, fall back to **red-flags**: a systematic scan will surface concrete signals to diagnose from.
+If the described symptom does not match any branch above, and the code does show concrete problems, fall back to **red-flags**: a systematic scan will surface concrete signals to diagnose from.
 
 ## Pull request signature
 

@@ -1,6 +1,6 @@
 ---
 name: strategic-mindset
-description: "Assesses whether code reflects strategic or tactical thinking, including the 10-20% investment rule and tactical-tornado patterns. Use when evaluating design investment, when code was written under time pressure, or when working code consistently degrades the system. Not for judging whether a specific diff looks designed-in or bolted-on (use code-evolution)."
+description: "Use when code was shipped in a hurry and the user asks whether it is holding up, whether to keep building on it or invest in cleaning it up, or when working code keeps getting harder to change (\"we got this out the door before launch, is it OK to build subscriptions on it?\"). Assesses tactical vs. strategic investment, the 10-20% rule and tactical-tornado patterns, and ends with a concrete investment recommendation. Not for judging whether one specific diff looks designed-in or bolted-on (use code-evolution)."
 argument-hint: "[file, module, or codebase area]"
 allowed-tools: Read, Grep
 ---

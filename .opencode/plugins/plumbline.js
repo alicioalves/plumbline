@@ -2,7 +2,7 @@
  * Plumbline plugin for OpenCode.
  *
  * Registers this repo's skills/ directory with OpenCode's native skill
- * discovery via the `config` hook, so all 16 skills load whether this
+ * discovery via the `config` hook, so all 17 skills load whether this
  * plugin is loaded locally (`.opencode/plugins/`, while developing this
  * repo) or installed as a git-sourced package via opencode.json:
  *

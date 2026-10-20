@@ -1,6 +1,6 @@
 ---
 name: red-flags
-description: "Scans code against 18 design smells (the book's 14 named Red Flags plus 4 additional signals) and produces a structured diagnostic report. Use when the user asks for a red flags or design smell scan, asks to check code against a checklist, is evaluating unfamiliar code, or asks open-endedly whether anything is off in a named or pasted file, class, or function, or asks you to look it over. Not for a specific bug, error, or failing test the user has already identified. Not for a plain diff or PR review before merge, or whether a PR maintains design trajectory (use code-evolution for both), or diagnosing why code feels complex (use complexity-recognition)."
+description: "Scans code against 18 design smells (the book's 14 named Red Flags plus 4 additional signals) and produces a structured diagnostic report. Use when the user asks for a red flags or design smell scan, asks to check code against a checklist, is evaluating unfamiliar code, or asks open-endedly whether anything is off in a named or pasted file, class, or function with no more specific concern. When the user names a concern (an interface that feels clunky, error handling, naming, comments, redundant layers, a change that touches many files), use the matching lens instead. Not for a specific bug, error, or failing test the user has already identified. Not for a plain diff or PR review before merge (use code-evolution), or diagnosing why code feels complex (use complexity-recognition)."
 argument-hint: "[file or directory]"
 allowed-tools: Read, Grep, Bash(git log:*), Bash(git diff:*), Bash(git show:*)
 ---
@@ -267,14 +267,16 @@ For a target over about 1,000 lines or spanning several packages, don't read it 
 
 ## Review Process
 
-1. **Identify scope**: file, module, PR diff, or class. If the code under review is written in Python or TypeScript, read [references/python.md](references/python.md) or [references/typescript.md](references/typescript.md) first: they list the idiomatic shapes each flag takes in that language. Go by the language the files are written in, not the language a binding or SDK exposes (Rust bindings for Python are Rust). For a large or multi-package target, follow the Reading Strategy above.
+0. **Check for a findings file**: if the project has `.plumbline/findings.md`, read it before scanning. It records earlier findings, their status and accepted trade-offs; see [references/findings-file.md](references/findings-file.md).
+1. **Identify scope**: file, module, PR diff, or class. If the code under review is written in Python, TypeScript, Rust or Go, read the matching guide first: [references/python.md](references/python.md), [references/typescript.md](references/typescript.md), [references/rust.md](references/rust.md) or [references/go.md](references/go.md). Each lists the idiomatic shapes the flags take in that language. Go by the language the files are written in, not the language a binding or SDK exposes (Rust bindings for Python are Rust). For a large or multi-package target, follow the Reading Strategy above.
 2. **Scan all flags**: For each: CLEAR, TRIGGERED, ACCEPTED, or N/A. If triggered: location, principle violated, candidate fix.
    - **ACCEPTED** means the signal is present but the code or its docs give an explicit rationale for the trade-off (a comment, an ADR, a design doc), and that rationale still holds. Never infer a rationale the code doesn't state. A project-wide principle (a CLAUDE.md or style guide saying "duplication is fine in codecs") counts only when it names this kind of code specifically; a general principle that could cut either way does not. List accepted flags in one line each and leave them out of the summary and prioritization. If the stated rationale no longer holds, the flag is TRIGGERED.
 3. **Structure a report**: Group findings by category (Structural, Boundary, Documentation, Naming/Abstraction, Process). Summarize flags triggered, critical issues and recommended actions. Put accepted trade-offs in a short separate list at the end.
 4. **Follow the arrows**: For each triggered flag, pull in the indicated lens for deeper analysis
 5. **Check for syndromes**: Multiple triggered flags may share a root cause. See `references/flag-interaction-map.md` for named clusters. A syndrome points at an architectural issue. Fixing the root cause resolves all flags in the cluster.
 6. **Prioritize**: Boundary flags compound over time and infect adjacent code, so fix those first. Canary flags are the cheapest to act on. Structural flags require refactoring but affect a bounded area.
-7. **Recommend**: Create a report with prioritized, actionable fixes tied to specific principles.
+7. **Recommend**: Create a report with prioritized, actionable fixes tied to specific principles. Don't apply them unprompted; if the user wants them applied, **apply-fixes** does it one fix at a time with the tests run after each.
+8. **Remember**: if `.plumbline/findings.md` exists, reconcile this review with it (new, still open, regressed, fixed) as [references/findings-file.md](references/findings-file.md) describes, lead the report with what changed, and update the file. If it doesn't exist and flags triggered, offer once to create it.
 
 ## Pull request signature
 

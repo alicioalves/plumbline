@@ -1,6 +1,6 @@
 ---
 name: code-evolution
-description: "Evaluates whether changes to existing code maintain or degrade design quality. Use when the user asks to review a diff or PR (for example before merging it), or asks about recently modified files, to judge whether each change looks designed-in or bolted-on. Not for scanning design smells (use red-flags) or assessing overall design investment (use strategic-mindset)."
+description: "Use when the user asks for a PR or diff review (\"PR review please\", \"anything to change before this goes in?\", \"can you look at this diff?\"), or about recently changed files, to judge whether each change is designed-in or bolted-on: special cases, flags and copies added instead of extending the design. Reads the change with git when it can. Not for a design-smell scan of code that isn't a change (use red-flags) or the overall investment balance of a codebase (use strategic-mindset)."
 argument-hint: "[file, module, or PR]"
 allowed-tools: Read, Grep, Bash(git log:*), Bash(git diff:*), Bash(git show:*)
 ---
@@ -91,7 +91,10 @@ Five maintenance rules:
 
 ## Review Process
 
-0. **Get the change**: if the target is a branch or PR in a git repository, read it with `git diff <base>...HEAD` (usually `main...HEAD`) and `git log --oneline <base>..HEAD` for the commit story, then open full files with `git show HEAD:<path>` only where the diff lacks context. Outside a git repo, review the diff or files you were given.
+Before step 1:
+
+- **Get the change**: if the target is a branch or PR in a git repository, read it with `git diff <base>...HEAD` (usually `main...HEAD`) and `git log --oneline <base>..HEAD` for the commit story, then open full files with `git show HEAD:<path>` only where the diff lacks context. Outside a git repo, review the diff or files you were given.
+- **Check remembered findings**: if the project has `.plumbline/findings.md`, read it. Call out a change that reintroduces a `fixed` finding (a regression) or adds to an `open` one, and credit a change that resolves one. Don't edit the file from here; that happens when the user runs **red-flags** or **apply-fixes**.
 1. **Apply the "designed this way" test**: Does the modification look native or bolted-on?
 2. **Check for incremental complexity**: Did the change add special cases, dependencies, parameters, or flags?
 3. **Run repetition audit**: Did the change introduce or perpetuate duplication?
