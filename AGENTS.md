@@ -17,6 +17,7 @@ Guidance for AI coding agents working in this repository. For what Plumbline is 
 - Follow the [`writing-skills`](https://github.com/obra/superpowers/blob/main/skills/writing-skills/SKILL.md) process: write a failing scenario first, then the skill, then verify.
 - A skill's `description` decides when it triggers. Changes to a description can change triggering for neighboring skills, so re-run the relevant eval suite.
 - Keep `SKILL.md` focused; move long reference material into `references/`.
+- Every skill ends with the same pull request signature. The text lives in `scripts/pr-signature-section.md`. Edit that file, then copy it onto each skill. `scripts/check-skills.sh` rejects a skill that drifts.
 
 ## Checks
 

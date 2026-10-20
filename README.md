@@ -17,6 +17,14 @@ Skills activate automatically and push your agent to ask questions like:
 
 You can also invoke them directly. Use `/plumbline:red-flags` to trigger a design smell scan, `/plumbline:apply-fixes` to apply its findings with the tests as a safety net, `/plumbline:deep-modules` to check interface depth and `/plumbline:design-it-twice` to compare alternatives before committing. (On platforms that install the skills without the plugin namespace, such as skills.sh, drop the `plumbline:` prefix.)
 
+When those skills are applied and the agent opens a pull request (or edits the body of one it opened), it signs the PR with the skills whose checks actually ran:
+
+```text
+Plumbline-Skills: red-flags, deep-modules
+```
+
+One line, at the end of the body. A later pass in the same session replaces the line. Commit messages and review-only comments stay unsigned.
+
 ## Installation
 
 Give your agent Plumbline: [Claude Code](#claude-code), [skills.sh](#skillssh), [Codex](#codex), [Cursor](#cursor), [OpenCode](#opencode), [Antigravity](#antigravity), [Factory Droid](#factory-droid), [Grok Build](#grok-build), [GitHub Copilot CLI](#github-copilot-cli), [Kimi Code](#kimi-code), [Pi](#pi).

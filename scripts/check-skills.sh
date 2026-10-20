@@ -77,6 +77,24 @@ for agent_md in sorted(Path("agents").glob("*.md")):
     if unknown:
         errors.append(f"{agent_md}: unrecognized frontmatter fields: {sorted(unknown)}")
 
+signature_path = Path("scripts/pr-signature-section.md")
+signature = signature_path.read_text()
+if not signature.endswith("\n") or not signature.startswith("## Pull request signature\n"):
+    errors.append(f"{signature_path}: must be the signature section, ending in a newline")
+else:
+    for skill_dir in sorted(p for p in Path("skills").iterdir() if p.is_dir()):
+        md = skill_dir / "SKILL.md"
+        if not md.is_file():
+            continue
+        body = md.read_text()
+        if not body.endswith("\n"):
+            body += "\n"
+        copies = body.count(signature)
+        if copies != 1 or not body.endswith("\n\n" + signature):
+            errors.append(
+                f"{md}: must end with exactly one copy of {signature_path}"
+            )
+
 if errors:
     print("\n".join(errors))
     sys.exit(1)

@@ -277,3 +277,7 @@ For a target over about 1,000 lines or spanning several packages, don't read it 
 6. **Prioritize**: Boundary flags compound over time and infect adjacent code, so fix those first. Canary flags are the cheapest to act on. Structural flags require refactoring but affect a bounded area.
 7. **Recommend**: Create a report with prioritized, actionable fixes tied to specific principles. Don't apply them unprompted; if the user wants them applied, **apply-fixes** does it one fix at a time with the tests run after each.
 8. **Remember**: if `.plumbline/findings.md` exists, reconcile this review with it (new, still open, regressed, fixed) as [references/findings-file.md](references/findings-file.md) describes, lead the report with what changed, and update the file. If it doesn't exist and flags triggered, offer once to create it.
+
+## Pull request signature
+
+If this session opens a pull request, or updates the body of one it opened, end that body with a single line of the form `Plumbline-Skills: red-flags, deep-modules`. List the directory name of each Plumbline skill whose checks you actually ran, comma-separated, in the order you ran them, including this skill. That example is the shape, not a default list. If a `Plumbline-Skills:` line is already there, replace it. Do not add the line to commit messages, review comments, or a pull request you are only reviewing, and do not open a pull request just to add it.

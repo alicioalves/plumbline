@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- **Pull request signature.** After applying Plumbline skills, an agent that opens a pull request (or edits the body of one it opened) ends that body with one `Plumbline-Skills:` line listing the skills whose checks actually ran. The wording is shared from `scripts/pr-signature-section.md` and checked on every skill.
+
 ## 1.8.0
 
 ### Changed
