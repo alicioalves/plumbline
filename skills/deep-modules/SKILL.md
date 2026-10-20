@@ -139,3 +139,7 @@ If callers see the same structure they'd see without the class, the class isn't 
 This skill asks "is the module deep enough?": does the interface justify what's behind it? **abstraction-quality** asks the prior question: "is the abstraction genuine?": does each layer provide a different way of thinking? A module can be deep but sit in a layer that duplicates the abstraction of its neighbor. When adjacent layers look suspiciously similar, hand off to **abstraction-quality**.
 
 Red flag signals for module depth are cataloged in **red-flags** (Shallow Module, Pass-Through Method).
+
+## Pull request signature
+
+If this session opens a pull request, or updates the body of one it opened, end that body with a single line of the form `Plumbline-Skills: red-flags, deep-modules`. List the directory name of each Plumbline skill whose checks you actually ran, comma-separated, in the order you ran them, including this skill. That example is the shape, not a default list. If a `Plumbline-Skills:` line is already there, replace it. Do not add the line to commit messages, review comments, or a pull request you are only reviewing, and do not open a pull request just to add it.
