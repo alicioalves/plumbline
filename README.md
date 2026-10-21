@@ -15,7 +15,7 @@ Skills activate automatically and push your agent to ask questions like:
 - *Can this method be understood without reading another one in a different file?*
 - *Is error handling pushing work onto callers that the module could handle itself?*
 
-You can also invoke them directly. Use `/plumbline:red-flags` to trigger a design smell scan, `/plumbline:apply-fixes` to apply its findings with the tests as a safety net, `/plumbline:deep-modules` to check interface depth and `/plumbline:design-it-twice` to compare alternatives before committing. (On platforms that install the skills without the plugin namespace, such as skills.sh, drop the `plumbline:` prefix.)
+You can also invoke them directly. Use `/plumbline:red-flags` to trigger a design smell scan, `/plumbline:apply-fixes` to apply its findings with the tests as a safety net, `/plumbline:deep-modules` to check interface depth, `/plumbline:design-it-twice` to compare alternatives before committing, and `/plumbline:test-worth` to decide which tests to write or keep. (On platforms that install the skills without the plugin namespace, such as skills.sh, drop the `plumbline:` prefix.)
 
 When those skills are applied and the agent opens a pull request (or edits the body of one it opened), it signs the PR with the skills whose checks actually ran:
 
@@ -53,7 +53,7 @@ codex plugin marketplace add tomymaritano/plumbline
 codex plugin add plumbline@plumbline
 ```
 
-Older Codex versions only get the 17 skills, via a manual symlink — see [.codex/INSTALL.md](.codex/INSTALL.md) for that fallback and full troubleshooting.
+Older Codex versions only get the 18 skills, via a manual symlink — see [.codex/INSTALL.md](.codex/INSTALL.md) for that fallback and full troubleshooting.
 
 ### Cursor
 
@@ -63,7 +63,7 @@ Cursor doesn't yet have a one-line "install from a GitHub URL" flow for unlisted
 git clone https://github.com/tomymaritano/plumbline.git ~/.cursor/plugins/local/plumbline
 ```
 
-Then check the **Customize** panel in the sidebar to confirm Plumbline and its 17 skills are listed.
+Then check the **Customize** panel in the sidebar to confirm Plumbline and its 18 skills are listed.
 
 ### OpenCode
 
@@ -99,7 +99,7 @@ grok plugin marketplace add tomymaritano/plumbline
 grok plugin install plumbline
 ```
 
-Or install straight from the repo with `grok plugin install tomymaritano/plumbline`. Add `--trust` to skip the confirmation prompt, then run `/plugin` to check that Plumbline and its 17 skills are listed.
+Or install straight from the repo with `grok plugin install tomymaritano/plumbline`. Add `--trust` to skip the confirmation prompt, then run `/plugin` to check that Plumbline and its 18 skills are listed.
 
 ### GitHub Copilot CLI
 
@@ -201,11 +201,17 @@ A reusable GitHub Actions workflow runs `code-evolution` on each pull request an
 | `diagnose` | Routes a vague symptom or complaint to the most relevant skill via a decision tree |
 | `apply-fixes` | Applies a report's findings one fix at a time, running the tests after each and reverting any fix that breaks them; flags fixes no test covers, asks before changing a public interface, and can commit each fix separately |
 
+### Testing
+
+| Skill | Covers |
+| --- | --- |
+| `test-worth` | Which tests to write and keep: a test stays only if it pays for itself, and whether it protects behavior or locks the implementation |
+
 ## Security and privacy
 
 - **No network calls, no credentials.** The skills are Markdown instructions. Plumbline sends nothing anywhere and needs no API key (the optional CI workflow uses your own `ANTHROPIC_API_KEY`, see [docs/ci-review.md](docs/ci-review.md)).
 - **Hooks are opt-in and local.** The review-on-stop hook is two dependency-free Node scripts in `hooks/`, matched only on `Edit|Write|MultiEdit` and `Stop`. They do nothing unless you turn the option on. When on, they record which code files a turn edited (path and line count) in Claude Code's plugin data folder, and delete it at the end of each turn. They read no file contents and run no shell commands.
-- **Skills that change code ask first.** `apply-fixes` is the only skill allowed to edit files; it asks before public-interface changes and never commits unless you choose commit mode. Review skills are read-only apart from `git log`/`diff`/`show` and the optional `.plumbline/findings.md` they offer to write.
+- **Skills that change code ask first.** `apply-fixes` is the only skill that edits production code to apply a design finding; it asks before public-interface changes and never commits unless you choose commit mode. `test-worth` may create or edit test files after asking, and may edit production code only inside a test-first loop the user explicitly asked for, one scenario at a time. Review skills are read-only apart from `git log`/`diff`/`show` and the optional `.plumbline/findings.md` they offer to write.
 
 ## Attribution
 
@@ -215,6 +221,8 @@ professor of computer science at Stanford University, and his book
 [*A Philosophy of Software Design*](https://web.stanford.edu/~ouster/cgi-bin/aposd.php). This project is not affiliated with, endorsed by, or sponsored by John Ousterhout, Stanford University, or the publishers of *A Philosophy of Software Design*.
 
 **If you find these skills useful, you should really buy and read the book.** The skills in this repo are by no means a substitute for reading it. It is the definitive treatment of these ideas and an enjoyable read for any dev.  Available from [Amazon](https://www.amazon.com/dp/173210221X) (no affiliate link). Also available in [German](https://www.oreilly.com/library/view/prinzipien-des-softwaredesigns/9781098130053/) (O'Reilly, 2021) and [Chinese](https://item.jd.com/14328323.html) (Posts and Telecommunications Press, 2024).
+
+`test-worth` is adapted in part from Vladimir Khorikov's *Unit Testing Principles, Practices, and Patterns*, with instruments from Gerard Meszaros, Michael Feathers, Kent Beck, and *Software Engineering at Google*. It is not a design lens and it is not a substitute for those books. This project is not affiliated with or endorsed by those authors.
 
 The skills and code in this project are independently authored original works by the project's contributors. Brief quotations from the book are sometimes used with full attribution for purposes of commentary, criticism, and education. All trademarks and copyrights are the property of their respective owners.
 

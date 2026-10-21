@@ -51,7 +51,7 @@ For each fix in order:
 2. **Make the smallest change that removes the cause**, not the symptom. Move knowledge to its owner, delete the pass-through, push the complexity down, as the finding's lens says. Update every caller in the repo in the same fix. Don't reformat, rename or tidy anything the finding doesn't name.
 3. **Run the tests.**
    - **Pass**: record the fix as applied. In commit mode, commit just this fix's files (`git add <files>`, then `git commit`) with a message that names the flag it resolves, e.g. `Remove pass-through UserService.find_by_email (red-flags #2)`. Continue.
-   - **Fail**: revert only the files this fix touched (`git checkout -- <files>`), record why it failed, and decide: if later fixes don't depend on this one, continue with them; if they do, stop and report.
+   - **Fail**: revert only the files this fix touched (`git checkout -- <files>`), record why it failed, and decide: if later fixes don't depend on this one, continue with them; if they do, stop and report; if the red test asserts implementation and this fix did not intend to change it, do not edit it, name **test-worth**, and stop that item.
    - **Flaky?** If the failure is in a test that has nothing to do with the files you changed, run the tests once more before reverting. If the second run passes, say the test looks flaky and keep the fix; if it fails again, revert as above.
 4. Never stack a second fix on top of an unverified one.
 
@@ -74,6 +74,7 @@ Without commit mode, don't commit: leave the changes for the user to review.
 - Behavior-preserving only. If a fix would need a behavior change to make sense (a new error type callers must handle, a removed option someone uses), describe it and ask instead of applying it.
 - Stay inside the findings. A new problem noticed along the way goes in the report as a suggestion, not into the diff.
 - Tests changed by a fix are allowed only to follow a renamed or moved interface. Never weaken an assertion to make a fix pass.
+- If a fix goes red because a test asserts implementation, revert that fix, do not weaken the assertion, name **test-worth**, and stop that item. Do not rewrite the test here.
 
 ## Pull request signature
 

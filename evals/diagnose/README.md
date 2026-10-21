@@ -49,4 +49,4 @@ v1.5.0 (branch `feat/evals-all-skills`), run on 2026-10-17: 3 cases × 2 runs ×
 
 ## When to re-run
 
-Re-run after any change to `skills/diagnose/SKILL.md` (especially its decision tree), or to the description of a skill that competes for the same triggers: `design-review` (comprehensive reviews), `red-flags` (its fallback and checklist scans), `complexity-recognition` (the "feels wrong" entry point), and the lenses it routes to here (`information-hiding`, `naming-obviousness`, `design-it-twice`). When the numbers move, update the baseline above.
+Re-run after any change to `skills/diagnose/SKILL.md` (especially its decision tree), or to the description of a skill that competes for the same triggers: `design-review` (comprehensive reviews), `red-flags` (its fallback and checklist scans), `complexity-recognition` (the "feels wrong" entry point), `test-worth` (branch 10, complaints about tests), and the lenses it routes to here (`information-hiding`, `naming-obviousness`, `design-it-twice`). When the numbers move, update the baseline above.

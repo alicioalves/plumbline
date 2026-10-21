@@ -69,12 +69,20 @@ Technical debt from tactical shortcuts. The concern is process, not a specific s
 
 A review already named the problems (a red-flags or design-review report in the conversation, or findings the user lists) and the user wants the code changed.
 
-→ **apply-fixes**: Apply the findings one at a time, with the tests run after each.
+→ **test-worth** if what they want fixed is the tests and no design report named production findings.
+→ Otherwise **apply-fixes**: Apply the findings one at a time, with the tests run after each.
+
+### 10. The complaint is about tests
+
+What to write, what to keep, a test that breaks when the implementation changes, a mock, a private-method test, or missing tests on code that is about to change.
+
+→ **test-worth**. Do not apply the four criteria here. That skill owns them.
 
 ## Multiple Symptoms
 
 When the description maps to more than one root symptom, prioritize in this order:
 
+0. **Tests** (symptom 10): If the thing being complained about is tests, route to **test-worth** first, even when the wording also sounds structural. `test-worth` hands back to a design lens if the defect is production structure.
 1. **Structural** (symptoms 1–6): These address the shape of the code and have the highest design leverage.
 2. **Process** (symptom 8): This addresses how work is done. Important but downstream of structure.
 3. **Surface** (symptom 7): Comment/doc issues are often symptoms of deeper structural problems. Fixing structure first may resolve them.
@@ -83,7 +91,7 @@ Route to the highest-priority match first. Mention the secondary matches so the 
 
 ## When There Is No Problem
 
-A vague complaint doesn't mean the code is wrong. Before routing, read the code. If it shows none of the symptoms in the tree (changes stay local, names fit, errors are handled where they belong, interfaces are simple), lead with that verdict: the design is sound. Then, if useful, say what the unease probably is instead (unfamiliar domain, a hard problem, a style preference) and offer at most one optional improvement, labeled as optional. Don't go looking for "what's bugging you" until you find something to restructure.
+A vague complaint doesn't mean the code is wrong. A complaint about the tests is branch 10 even when production shows none of those structural symptoms. Before routing, read the code. If it shows none of the symptoms in the tree (changes stay local, names fit, errors are handled where they belong, interfaces are simple), lead with that verdict: the design is sound. Then, if useful, say what the unease probably is instead (unfamiliar domain, a hard problem, a style preference) and offer at most one optional improvement, labeled as optional. Don't go looking for "what's bugging you" until you find something to restructure.
 
 ## Fallback
 
