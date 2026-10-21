@@ -10,6 +10,6 @@ From Kent Beck, [Canon TDD](https://newsletter.kentbeck.com/p/canon-tdd):
 4. Make it pass with the smallest production change. Do not refactor in this step. Implementation decisions wait.
 5. Refactor only while the suite is green. Stop when the next scenario is the harder problem.
 
-Then score that test with the record. A test that locks the implementation is not "done" because it went red and then green. Next scenario only after green.
+Score the draft with the record before the first production edit. After it is green, do not start the next scenario unless the record is `keep`; otherwise rewrite or delete that test first. A test that locks the implementation is not "done" because it went red and then green.
 
 Test-and-commit-or-revert is not this loop. Do not adopt it from this file.

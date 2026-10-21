@@ -27,7 +27,7 @@ Read one more file, and only on the route that names it:
 
 ## Routes
 
-Pick one. Judge is the default.
+Pick one. Judge is the default. Characterize wins over Write when the target has no tests and the user is about to change it or asks to pin current behavior; Write is only for choosing or adding tests when the user is not characterizing before a change.
 
 ### Judge
 
@@ -35,15 +35,15 @@ The user wants to know whether existing tests earn their place. Emit one record 
 
 ### Write
 
-The user asked which tests to write, or to add tests for behavior that already exists. Follow `behaviors.md`. Score every draft with a record before writing anything. A `don't-write` stays in the answer as a rejection. Show the records and ask. On yes, create or edit test files only, then run the project's test command once. A new failure means the test is wrong or it found a bug: stop and show it. Do not edit production code to make the new test pass unless the user says the current behavior is what should change.
+The user asked which tests to write, or to add tests for behavior that already exists, and is not characterizing before a change. Follow `behaviors.md`. Score every draft with a record before writing anything. A `don't-write` stays in the answer as a rejection. Show the records and ask. On yes, create or edit test files only, then run the project's test command once. A new failure means the test is wrong or it found a bug: stop and show it. Do not edit production code. Building that behavior test-first is a new explicit Drive request.
 
 ### Drive
 
-The user explicitly asked to build new behavior test-first. Follow `canon-tdd.md`. One scenario. Ask before the first production edit. Run the project's test command to see that one test fail for the expected reason, make the smallest production change that turns it green, and run the command again. Refactor only while green. Do not mix a design restructuring into the step that makes the test pass. A design problem noticed here is named and left to the matching lens or to **apply-fixes**.
+The user explicitly asked to build new behavior test-first. Follow `canon-tdd.md`. Ask before the first production edit. Run the project's test command for the failing run and again after the production change. Do not mix a design restructuring into the step that makes the test pass. A design problem noticed here is named and left to the matching lens or to **apply-fixes**.
 
 ### Characterize
 
-The target has no tests and the user is about to change it. Follow `legacy.md`. Ask, write the test, and run the project's test command once to confirm it passes against current behavior. Do not change production code in this step.
+The target has no tests and the user is about to change it, or the user asks to pin current behavior. Follow `legacy.md`. Ask, write the test, and run the project's test command once to confirm it passes against current behavior. Do not change production code in this step.
 
 ## The project's test command
 
