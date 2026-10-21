@@ -75,4 +75,4 @@ Notes from the v1.3.0 run (numbers refer to that run):
 
 ## When to re-run
 
-Re-run after any change to `skills/red-flags/SKILL.md`, or to the description of a skill that competes for the same triggers (`code-evolution`, `design-review`, `complexity-recognition`). When the numbers move, update the baseline table above.
+Re-run after any change to `skills/red-flags/SKILL.md`, or to the description of a skill that competes for the same triggers (`code-evolution`, `design-review`, `complexity-recognition`, `test-worth`). When the numbers move, update the baseline table above.

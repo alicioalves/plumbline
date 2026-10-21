@@ -71,10 +71,17 @@ A review already named the problems (a red-flags or design-review report in the 
 
 → **apply-fixes**: Apply the findings one at a time, with the tests run after each.
 
+### 10. The complaint is about tests
+
+What to write, what to keep, a test that breaks when the implementation changes, a mock, a private-method test, or missing tests on code that is about to change.
+
+→ **test-worth**. Do not apply the four criteria here. That skill owns them.
+
 ## Multiple Symptoms
 
 When the description maps to more than one root symptom, prioritize in this order:
 
+0. **Tests** (symptom 10): If the thing being complained about is tests, route to **test-worth** first, even when the wording also sounds structural. `test-worth` hands back to a design lens if the defect is production structure.
 1. **Structural** (symptoms 1–6): These address the shape of the code and have the highest design leverage.
 2. **Process** (symptom 8): This addresses how work is done. Important but downstream of structure.
 3. **Surface** (symptom 7): Comment/doc issues are often symptoms of deeper structural problems. Fixing structure first may resolve them.

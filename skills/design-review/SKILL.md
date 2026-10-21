@@ -11,6 +11,8 @@ When invoked with $ARGUMENTS, scope the entire review to the specified target. R
 
 This skill does not replace individual lenses. It sequences them into a diagnostic funnel that moves from broad to narrow, skipping work when early phases find nothing actionable.
 
+If the ask is about tests, or the only findings are in test code, this funnel does not apply. Use **test-worth**.
+
 ## Diagnostic Funnel
 
 ### Phase 1: Complexity Triage

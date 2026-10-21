@@ -74,6 +74,7 @@ Without commit mode, don't commit: leave the changes for the user to review.
 - Behavior-preserving only. If a fix would need a behavior change to make sense (a new error type callers must handle, a removed option someone uses), describe it and ask instead of applying it.
 - Stay inside the findings. A new problem noticed along the way goes in the report as a suggestion, not into the diff.
 - Tests changed by a fix are allowed only to follow a renamed or moved interface. Never weaken an assertion to make a fix pass.
+- If a fix goes red because a test asserts implementation (call order, private state, incidental fields) rather than caller-visible behavior, revert that fix, do not weaken the assertion, name **test-worth**, and stop that item. Do not rewrite the test here.
 
 ## Pull request signature
 
