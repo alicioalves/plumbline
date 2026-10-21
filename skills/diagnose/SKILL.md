@@ -67,9 +67,10 @@ Technical debt from tactical shortcuts. The concern is process, not a specific s
 
 ### 9. "I know what's wrong, just fix it"
 
-A review already named the problems (a red-flags or design-review report in the conversation, or findings the user lists) and the user wants the code changed. If what they want fixed is the tests, route to **test-worth** unless a design report already named production findings.
+A review already named the problems (a red-flags or design-review report in the conversation, or findings the user lists) and the user wants the code changed.
 
-→ **apply-fixes**: Apply the findings one at a time, with the tests run after each.
+→ **test-worth** if what they want fixed is the tests and no design report named production findings.
+→ Otherwise **apply-fixes**: Apply the findings one at a time, with the tests run after each.
 
 ### 10. The complaint is about tests
 
