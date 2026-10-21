@@ -11,7 +11,7 @@ When invoked with $ARGUMENTS, scope the entire review to the specified target. R
 
 This skill does not replace individual lenses. It sequences them into a diagnostic funnel that moves from broad to narrow, skipping work when early phases find nothing actionable.
 
-If the ask is about tests, or the only findings are in test code, this funnel does not apply. Use **test-worth**.
+If the ask is only about tests, this funnel does not apply; use **test-worth**.
 
 ## Diagnostic Funnel
 
@@ -57,7 +57,7 @@ Run the full **red-flags** 18-flag checklist against the target. Any flag trigge
 
 ## Early Termination
 
-If Phase 1 finds no measurable complexity AND Phase 5 triggers zero flags, stop. Report the target as clean. Do not force findings where none exist.
+If Phase 1 finds no measurable complexity AND Phase 5 triggers zero flags, stop. Report the target as clean. Do not force findings where none exist, and if production is clean and what remains is test code, name **test-worth** for that part.
 
 ## Prioritization
 

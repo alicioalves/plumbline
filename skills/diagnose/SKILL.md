@@ -67,7 +67,7 @@ Technical debt from tactical shortcuts. The concern is process, not a specific s
 
 ### 9. "I know what's wrong, just fix it"
 
-A review already named the problems (a red-flags or design-review report in the conversation, or findings the user lists) and the user wants the code changed.
+A review already named the problems (a red-flags or design-review report in the conversation, or findings the user lists) and the user wants the code changed. If what they want fixed is the tests, route to **test-worth** unless a design report already named production findings.
 
 → **apply-fixes**: Apply the findings one at a time, with the tests run after each.
 
@@ -90,7 +90,7 @@ Route to the highest-priority match first. Mention the secondary matches so the 
 
 ## When There Is No Problem
 
-A vague complaint doesn't mean the code is wrong. Before routing, read the code. If it shows none of the symptoms in the tree (changes stay local, names fit, errors are handled where they belong, interfaces are simple), lead with that verdict: the design is sound. Then, if useful, say what the unease probably is instead (unfamiliar domain, a hard problem, a style preference) and offer at most one optional improvement, labeled as optional. Don't go looking for "what's bugging you" until you find something to restructure.
+A vague complaint doesn't mean the code is wrong. A complaint about the tests is branch 10 even when production shows none of those structural symptoms. Before routing, read the code. If it shows none of the symptoms in the tree (changes stay local, names fit, errors are handled where they belong, interfaces are simple), lead with that verdict: the design is sound. Then, if useful, say what the unease probably is instead (unfamiliar domain, a hard problem, a style preference) and offer at most one optional improvement, labeled as optional. Don't go looking for "what's bugging you" until you find something to restructure.
 
 ## Fallback
 
