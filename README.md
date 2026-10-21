@@ -211,7 +211,7 @@ A reusable GitHub Actions workflow runs `code-evolution` on each pull request an
 
 - **No network calls, no credentials.** The skills are Markdown instructions. Plumbline sends nothing anywhere and needs no API key (the optional CI workflow uses your own `ANTHROPIC_API_KEY`, see [docs/ci-review.md](docs/ci-review.md)).
 - **Hooks are opt-in and local.** The review-on-stop hook is two dependency-free Node scripts in `hooks/`, matched only on `Edit|Write|MultiEdit` and `Stop`. They do nothing unless you turn the option on. When on, they record which code files a turn edited (path and line count) in Claude Code's plugin data folder, and delete it at the end of each turn. They read no file contents and run no shell commands.
-- **Skills that change code ask first.** `apply-fixes` is the only skill allowed to edit files; it asks before public-interface changes and never commits unless you choose commit mode. Review skills are read-only apart from `git log`/`diff`/`show` and the optional `.plumbline/findings.md` they offer to write.
+- **Skills that change code ask first.** `apply-fixes` is the only skill that edits production code to apply a design finding; it asks before public-interface changes and never commits unless you choose commit mode. `test-worth` may create or edit test files after asking, and may edit production code only inside a test-first loop the user explicitly asked for, one scenario at a time. Review skills are read-only apart from `git log`/`diff`/`show` and the optional `.plumbline/findings.md` they offer to write.
 
 ## Attribution
 

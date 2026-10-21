@@ -2,7 +2,7 @@
 name: test-worth
 description: "Use when the user asks which tests to write or keep, asks to add or review tests, says a test breaks whenever the implementation changes, or asks whether a mock, a private-method test, or a characterization test is worth it (\"what should I test?\", \"this test is brittle\", \"are these tests locking us in?\"). Judges every test by one acceptance rule: it stays only if it pays for itself. Not for fixing a failing test or a bug the user already identified (fix it directly), not for applying a design report (use apply-fixes), and not for a design smell in production code (use red-flags or the matching lens)."
 argument-hint: "[file, test, or behavior to judge]"
-allowed-tools: Read, Grep
+allowed-tools: Read, Grep, Edit, Write, Bash(git status:*), Bash(git diff:*)
 ---
 
 # Test Worth
@@ -13,11 +13,17 @@ The acceptance rule, the smell catalog, and the size bands each live in one file
 
 ## Which files to read
 
-Read these three before any verdict:
+Read these three before any verdict, including a verdict on a test you are about to write:
 
 - [references/pillars.md](references/pillars.md) — the only acceptance rule, the record template, and the verdicts
 - [references/smells.md](references/smells.md) — the only smell catalog
 - [references/size.md](references/size.md) — the only size bands
+
+Read one more file, and only on the route that names it:
+
+- **Write** → [references/behaviors.md](references/behaviors.md)
+- **Drive** → [references/canon-tdd.md](references/canon-tdd.md)
+- **Characterize** → [references/legacy.md](references/legacy.md)
 
 ## Routes
 
@@ -26,6 +32,24 @@ Pick one. Judge is the default.
 ### Judge
 
 The user wants to know whether existing tests earn their place. Emit one record per test, in the template `pillars.md` defines, then a tally of the verdicts. Do not edit files. If every verdict is `keep`, say so and stop.
+
+### Write
+
+The user asked which tests to write, or to add tests for behavior that already exists. Follow `behaviors.md`. Score every draft with a record before writing anything. A `don't-write` stays in the answer as a rejection. Show the records and ask. On yes, create or edit test files only, then run the project's test command once. A new failure means the test is wrong or it found a bug: stop and show it. Do not edit production code to make the new test pass unless the user says the current behavior is what should change.
+
+### Drive
+
+The user explicitly asked to build new behavior test-first. Follow `canon-tdd.md`. One scenario. Ask before the first production edit. Run the project's test command to see that one test fail for the expected reason, make the smallest production change that turns it green, and run the command again. Refactor only while green. Do not mix a design restructuring into the step that makes the test pass. A design problem noticed here is named and left to the matching lens or to **apply-fixes**.
+
+### Characterize
+
+The target has no tests and the user is about to change it. Follow `legacy.md`. Ask, write the test, and run the project's test command once to confirm it passes against current behavior. Do not change production code in this step.
+
+## The project's test command
+
+Use the command **apply-fixes** already looks up: a `test` script in `package.json`, `cargo test`, `pytest` (when `pyproject.toml`, `pytest.ini`, or `tests/` is present), `go test ./...`, a `test` target in a Makefile or justfile, or the command documented in the project's CLAUDE.md or README. If none is clear, ask. Do not add that command to this skill's frontmatter. If the host blocks the command because it is not allowlisted, ask the user to run it and paste the output.
+
+Judge does not run the command. A verdict does not depend on a green suite.
 
 ## What this skill does not do
 
