@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- **`fault-locality`.** For a panic, a stack, or a red test: name the function that made the bad value, and edit there on `apply`. A missing path to a policy the module already has is `policy`, not a design review. A nil check at the crash is a failed run.
+- **`evals/fault-locality/`.** Five cases. The suite has not been run.
+
+### Changed
+
+- **`diagnose` and `red-flags`.** A panic, a stack, or a failing test goes to `fault-locality`. Those suites were not re-run with this description change.
+
 ## 1.8.0
 
 ### Changed

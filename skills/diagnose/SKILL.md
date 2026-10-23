@@ -1,6 +1,6 @@
 ---
 name: diagnose
-description: "Use when the user describes a design symptom and says they don't know what kind of problem it is or which review to run (\"something about this is off but I can't tell what\", \"where do I even start with this?\"). Routes the symptom to the right Plumbline lens with a decision tree and says when there is no structural problem. When the symptom already points at one lens (a naming struggle, error-handling sprawl, a change that touches many files), use that lens directly. Not for a comprehensive review (use design-review) or a checklist scan (use red-flags)."
+description: "Use when the user describes a design symptom and says they don't know what kind of problem it is or which review to run (\"something about this is off but I can't tell what\", \"where do I even start with this?\"). Routes the symptom to the right Plumbline lens with a decision tree and says when there is no structural problem. When the symptom already points at one lens (a naming struggle, error-handling sprawl, a change that touches many files), use that lens directly. Not for a panic, a stack trace, or a failing test (use fault-locality). Not for a comprehensive review (use design-review) or a checklist scan (use red-flags)."
 argument-hint: "[description of the symptom or problem]"
 allowed-tools: Read, Grep
 ---
@@ -10,6 +10,12 @@ allowed-tools: Read, Grep
 When invoked with $ARGUMENTS, match the described symptom against the decision tree below and route to the appropriate skill. If code paths are referenced, read them first to confirm the match before routing. This skill routes to other skills from Plumbline (https://github.com/tomymaritano/plumbline). It works best when the full collection is installed.
 
 ## Decision Tree
+
+### 0. "It panics / the test is red / here is the stack"
+
+The report is a wrong output, a panic, or a failing test. The question is where it may be fixed.
+
+→ **fault-locality**: Name the function that made the bad value. Do not route this to a design lens.
 
 ### 1. "Something feels wrong but I can't say what"
 
