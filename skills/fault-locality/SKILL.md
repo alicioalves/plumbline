@@ -1,6 +1,6 @@
 ---
 name: fault-locality
-description: "Use when a failure is already in hand and the question is where it may be fixed: a panic, a stack trace, a failing test, \"this used to work\", or a request to patch the crash in a hurry (\"just nil-check it\", \"just return None\", \"just coerce it\"). The argument is the pace and the route: fast or sure, then locate, repair, or apply. Not when there is no failing output and the user asks whether an interface is awkward, whether to merge types, which tests to keep, or how to apply a design report."
+description: "Use when a failure is already in hand and the question is where it may be fixed: a panic, a stack trace, a failing test, \"this used to work\", or a request to patch the crash in a hurry (\"just nil-check it\", \"just return None\", \"just coerce it\"). The argument is the pace and the route: fast or sure, then locate, repair, or apply. Not when there is no failing output and the user asks whether an interface is awkward, whether to merge types, which tests to keep (use test-worth), or how to apply a design report (use apply-fixes)."
 argument-hint: "[fast|sure] [locate|repair|apply]"
 user-invocable: true
 allowed-tools: Read, Grep, Edit, Bash
@@ -62,3 +62,7 @@ Three sentences, in this order:
 3. The falsifier, and whether that check held. If the pace could not run it, say it is unchecked.
 
 On `repair` or `apply`, when the verdict is `local` or `policy`, add one sentence naming the edit. On `no failure`, that one line is the whole reply.
+
+## Pull request signature
+
+If this session opens a pull request, or updates the body of one it opened, end that body with a single line of the form `Plumbline-Skills: red-flags, deep-modules`. List the directory name of each Plumbline skill whose checks you actually ran, comma-separated, in the order you ran them, including this skill. That example is the shape, not a default list. If a `Plumbline-Skills:` line is already there, replace it. Do not add the line to commit messages, review comments, or a pull request you are only reviewing, and do not open a pull request just to add it.

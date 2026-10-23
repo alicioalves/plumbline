@@ -75,12 +75,22 @@ Technical debt from tactical shortcuts. The concern is process, not a specific s
 
 A review already named the problems (a red-flags or design-review report in the conversation, or findings the user lists) and the user wants the code changed.
 
-→ **apply-fixes**: Apply the findings one at a time, with the tests run after each.
+→ **test-worth** if what they want fixed is the tests and no design report named production findings.
+→ Otherwise **apply-fixes**: Apply the findings one at a time, with the tests run after each.
+
+### 10. The complaint is about tests
+
+What to write, what to keep, a test that breaks when the implementation changes, a mock, a private-method test, or missing tests on code that is about to change.
+
+→ **test-worth**. Do not apply the four criteria here. That skill owns them.
 
 ## Multiple Symptoms
 
 When the description maps to more than one root symptom, prioritize in this order:
 
+A panic, a stack, or a red test (branch 0) goes to **fault-locality** before the items below.
+
+0. **Tests** (symptom 10): If the thing being complained about is which tests to write or keep, route to **test-worth** first, even when the wording also sounds structural. `test-worth` hands back to a design lens if the defect is production structure. A failing test is branch 0, not this one.
 1. **Structural** (symptoms 1–6): These address the shape of the code and have the highest design leverage.
 2. **Process** (symptom 8): This addresses how work is done. Important but downstream of structure.
 3. **Surface** (symptom 7): Comment/doc issues are often symptoms of deeper structural problems. Fixing structure first may resolve them.
@@ -89,8 +99,12 @@ Route to the highest-priority match first. Mention the secondary matches so the 
 
 ## When There Is No Problem
 
-A vague complaint doesn't mean the code is wrong. Before routing, read the code. If it shows none of the symptoms in the tree (changes stay local, names fit, errors are handled where they belong, interfaces are simple), lead with that verdict: the design is sound. Then, if useful, say what the unease probably is instead (unfamiliar domain, a hard problem, a style preference) and offer at most one optional improvement, labeled as optional. Don't go looking for "what's bugging you" until you find something to restructure.
+A vague complaint doesn't mean the code is wrong. A complaint about the tests is branch 10 even when production shows none of those structural symptoms. Before routing, read the code. If it shows none of the symptoms in the tree (changes stay local, names fit, errors are handled where they belong, interfaces are simple), lead with that verdict: the design is sound. Then, if useful, say what the unease probably is instead (unfamiliar domain, a hard problem, a style preference) and offer at most one optional improvement, labeled as optional. Don't go looking for "what's bugging you" until you find something to restructure.
 
 ## Fallback
 
 If the described symptom does not match any branch above, and the code does show concrete problems, fall back to **red-flags**: a systematic scan will surface concrete signals to diagnose from.
+
+## Pull request signature
+
+If this session opens a pull request, or updates the body of one it opened, end that body with a single line of the form `Plumbline-Skills: red-flags, deep-modules`. List the directory name of each Plumbline skill whose checks you actually ran, comma-separated, in the order you ran them, including this skill. That example is the shape, not a default list. If a `Plumbline-Skills:` line is already there, replace it. Do not add the line to commit messages, review comments, or a pull request you are only reviewing, and do not open a pull request just to add it.

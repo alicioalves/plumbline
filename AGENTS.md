@@ -13,10 +13,11 @@ Guidance for AI coding agents working in this repository. For what Plumbline is 
 
 ## Writing skills
 
-- Skills translate *A Philosophy of Software Design* into checks an agent can run on real code. New or changed guidance should reinforce that philosophy, not general code-review advice.
+- Design skills translate *A Philosophy of Software Design* into checks an agent can run on real code. New or changed guidance for those skills should reinforce that philosophy, not general code-review advice. `test-worth` is the exception: it follows Vladimir Khorikov's rule for whether a test earns its place, and it is not a design lens. Do not fold its criteria into `red-flags` or `design-review`.
 - Follow the [`writing-skills`](https://github.com/obra/superpowers/blob/main/skills/writing-skills/SKILL.md) process: write a failing scenario first, then the skill, then verify.
 - A skill's `description` decides when it triggers. Changes to a description can change triggering for neighboring skills, so re-run the relevant eval suite.
 - Keep `SKILL.md` focused; move long reference material into `references/`.
+- Every skill ends with the same pull request signature. The text lives in `scripts/pr-signature-section.md`. Edit that file, then copy it onto each skill. `scripts/check-skills.sh` rejects a skill that drifts.
 
 ## Checks
 

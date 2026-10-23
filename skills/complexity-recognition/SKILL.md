@@ -88,3 +88,7 @@ When you find complexity, you have two options:
 **When nothing shows up, say so.** If a likely change touches one place, the code needs no hidden knowledge, and you found no unknown unknowns, the verdict is that the module is not more complex than its job. Say that first and plainly. The user's unease may come from unfamiliarity, size or the problem's own difficulty; name that if it fits, but don't promote small preferences (an extra helper, a renamed variable) to complexity findings, and don't recommend restructuring code that passes all three symptom checks.
 
 Unlike other lenses, no individual red-flags signal routes here directly — complexity-recognition is the entry point when red-flags itself doesn't pinpoint a specific named flag (see red-flags' own "Not for diagnosing why code feels complex" disambiguation).
+
+## Pull request signature
+
+If this session opens a pull request, or updates the body of one it opened, end that body with a single line of the form `Plumbline-Skills: red-flags, deep-modules`. List the directory name of each Plumbline skill whose checks you actually ran, comma-separated, in the order you ran them, including this skill. That example is the shape, not a default list. If a `Plumbline-Skills:` line is already there, replace it. Do not add the line to commit messages, review comments, or a pull request you are only reviewing, and do not open a pull request just to add it.

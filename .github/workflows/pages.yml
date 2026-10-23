@@ -1,5 +1,7 @@
 # Publishes the docs site (built from skills/ and README.md) to GitHub Pages
 # on every release, or by hand from the Actions tab.
+# The github-pages environment must allow branch main and tags matching v*.
+# A release runs on the tag; a tag outside that policy is rejected.
 name: Docs site
 
 on:

@@ -11,6 +11,8 @@ When invoked with $ARGUMENTS, scope the entire review to the specified target. R
 
 This skill does not replace individual lenses. It sequences them into a diagnostic funnel that moves from broad to narrow, skipping work when early phases find nothing actionable.
 
+If the ask is only about tests, this funnel does not apply; use **test-worth**.
+
 ## Diagnostic Funnel
 
 ### Phase 1: Complexity Triage
@@ -55,7 +57,7 @@ Run the full **red-flags** 18-flag checklist against the target. Any flag trigge
 
 ## Early Termination
 
-If Phase 1 finds no measurable complexity AND Phase 5 triggers zero flags, stop. Report the target as clean. Do not force findings where none exist.
+If Phase 1 finds no measurable complexity AND Phase 5 triggers zero flags, stop. Report the target as clean. Do not force findings where none exist, and if production is clean and what remains is test code, name **test-worth** for that part.
 
 ## Prioritization
 
@@ -78,3 +80,7 @@ For any target too large to read whole, use the Reading Strategy in **red-flags*
 The funnel above is written for one target reviewed in-conversation. When the target is an entire codebase, a large PR spanning many files, or the user asks for a "thorough" or "comprehensive" review, running it once per file in a single conversation burns context fast and serializes work that has no reason to be serial.
 
 If Dynamic Workflows are available in this session (the user said "workflow," used the `ultracode` keyword, or `/effort ultracode` is set), build one instead of running the funnel manually file by file. See [references/workflow-builder.md](references/workflow-builder.md) for how to map these five phases onto a workflow script — what fans out, what needs a barrier, and where to add adversarial verification. If workflows aren't available, fall back to running the funnel per file or module in sequence, same as a single-target review.
+
+## Pull request signature
+
+If this session opens a pull request, or updates the body of one it opened, end that body with a single line of the form `Plumbline-Skills: red-flags, deep-modules`. List the directory name of each Plumbline skill whose checks you actually ran, comma-separated, in the order you ran them, including this skill. That example is the shape, not a default list. If a `Plumbline-Skills:` line is already there, replace it. Do not add the line to commit messages, review comments, or a pull request you are only reviewing, and do not open a pull request just to add it.
